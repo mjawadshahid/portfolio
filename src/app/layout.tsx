@@ -60,6 +60,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       className={`${GeistSans.variable} ${GeistMono.variable} ${newsreader.variable}`}
+      // The inline script below adds a `js` class before hydration, which is
+      // by definition a server/client mismatch. Expected, and the whole point.
+      suppressHydrationWarning
     >
       <head>
         {/*

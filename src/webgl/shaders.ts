@@ -90,9 +90,13 @@ export const fragmentShader = /* glsl */ `
 
     // A minority of particles burn amber; the share rises as the field
     // resolves, so the payoff is warmer than the noise it came from.
-    float amberMix = step(vRandom, 0.10 + vState * 0.28);
+    float amberMix = step(vRandom, 0.16 + vState * 0.3);
     vec3 color = mix(uDim, uAmber, amberMix);
 
-    gl_FragColor = vec4(color, alpha * uOpacity);
+    // Amber points carry more weight than the cool ones, so the warm minority
+    // reads as sparks rather than evenly-distributed confetti.
+    float weight = mix(0.62, 1.0, amberMix);
+
+    gl_FragColor = vec4(color, alpha * uOpacity * weight);
   }
 `;

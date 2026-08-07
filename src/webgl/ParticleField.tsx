@@ -45,11 +45,13 @@ export function ParticleField({ count }: { count: number }) {
       uTokenize: { value: 0 },
       uEmbed: { value: 0 },
       uDenoise: { value: 0 },
-      uSize: { value: 2.4 },
+      uSize: { value: 3.3 },
       uPointer: { value: new THREE.Vector2(0, 0) },
-      uDim: { value: new THREE.Color("#7e9a95") },
-      uAmber: { value: new THREE.Color("#e8a33d") },
-      uOpacity: { value: 0.92 },
+      // Slightly lifted off the token teal so the cool majority still reads
+      // against the terminal ground rather than sinking into it.
+      uDim: { value: new THREE.Color("#93aea8") },
+      uAmber: { value: new THREE.Color("#f0ab45") },
+      uOpacity: { value: 0.95 },
     }),
     []
   );
@@ -70,6 +72,19 @@ export function ParticleField({ count }: { count: number }) {
     const p = m.uniforms.uPointer.value as THREE.Vector2;
     p.x += (scrollState.pointerX - p.x) * k * 0.5;
     p.y += (scrollState.pointerY - p.y) * k * 0.5;
+
+    /**
+     * The field is nearly absent at the top of the page and builds as you
+     * scroll into it.
+     *
+     * At full strength behind the hero it reads as television static and
+     * fights the headline — which is the actual hero. Holding it back also
+     * means the heaviest paint work isn't happening during LCP.
+     */
+    const reveal = Math.min(1, scrollState.tokenize * 1.6);
+    const eased = reveal * reveal * (3 - 2 * reveal);
+    m.uniforms.uOpacity.value = 0.1 + eased * 0.85;
+    m.uniforms.uSize.value = 2.6 + eased * 1.4;
 
     if (pointsRef.current) {
       pointsRef.current.rotation.y += delta * 0.014;

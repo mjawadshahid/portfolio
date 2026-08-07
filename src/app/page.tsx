@@ -26,7 +26,7 @@ export default function HomePage() {
 
       {/* ------------------------------------------------ ACT 00 — prompt */}
       <section
-        className="ground-terminal relative min-h-[92svh] flex flex-col justify-center"
+        className="ground-field relative min-h-[92svh] flex flex-col justify-center"
         data-act="prompt"
       >
         <div className="shell py-20">
@@ -66,7 +66,7 @@ export default function HomePage() {
           the canvas animates against. The text in them is still real, and is
           what a crawler or a reduced-motion visitor reads. */}
       <section
-        className="ground-terminal relative border-t border-[var(--color-terminal-rule)]"
+        className="ground-field relative border-t border-[var(--color-terminal-rule)]"
         data-act="tokenize"
       >
         <div className="shell py-28 sm:py-40">
@@ -80,7 +80,7 @@ export default function HomePage() {
       </section>
 
       <section
-        className="ground-terminal relative"
+        className="ground-field relative"
         data-act="embed"
         id="domains"
       >
@@ -124,7 +124,7 @@ export default function HomePage() {
       </section>
 
       <section
-        className="ground-terminal relative"
+        className="ground-field relative"
         data-act="denoise"
       >
         <div className="shell py-28 sm:py-40">

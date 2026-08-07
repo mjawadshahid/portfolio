@@ -34,20 +34,33 @@ export function tokenLayout(count: number, seed = 1): Float32Array {
   const rand = mulberry32(seed);
   const out = new Float32Array(count * 3);
 
-  // Twelve lines of "text", each a run of tightly packed glyph blocks.
-  const lines = 12;
-  const lineHeight = 0.62;
+  // Nine lines of "text". The gap between rows has to stay well clear of the
+  // within-row jitter or the whole thing collapses into static instead of
+  // reading as type.
+  const lines = 9;
+  const lineHeight = 0.95;
   const width = 9;
+  const glyphs = 34;
+  const glyphW = width / glyphs;
 
   for (let i = 0; i < count; i++) {
     const line = Math.floor(rand() * lines);
-    // Cluster particles into glyph-sized groups so it reads as type, not soup.
-    const glyph = Math.floor(rand() * 34);
-    const glyphW = width / 34;
 
-    out[i * 3] = -width / 2 + glyph * glyphW + rand() * glyphW * 0.8;
-    out[i * 3 + 1] = (lines / 2 - line) * lineHeight * 0.5 + (rand() - 0.5) * 0.16;
-    out[i * 3 + 2] = (rand() - 0.5) * 0.25;
+    // Ragged right edge — real lines of text don't all end in the same place.
+    const lineLength = 0.45 + ((line * 7919) % 100) / 180;
+    const glyph = Math.floor(rand() * glyphs * lineLength);
+
+    // Word gaps: leave a few columns empty so runs of glyphs are visible.
+    if (glyph % 7 === 6) {
+      out[i * 3] = -width / 2 + glyph * glyphW;
+      out[i * 3 + 1] = (lines / 2 - line) * lineHeight;
+      out[i * 3 + 2] = 40; // parked far behind; effectively invisible
+      continue;
+    }
+
+    out[i * 3] = -width / 2 + glyph * glyphW + rand() * glyphW * 0.72;
+    out[i * 3 + 1] = (lines / 2 - line) * lineHeight + (rand() - 0.5) * 0.2;
+    out[i * 3 + 2] = (rand() - 0.5) * 0.2;
   }
   return out;
 }
