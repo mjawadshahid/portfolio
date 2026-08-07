@@ -76,6 +76,29 @@ body {
   font-size: 16px;
   line-height: 1.6;
   overflow-x: hidden;
+
+  /*
+    The site is set in lowercase throughout. Doing it here rather than
+    lowercasing the source strings means metadata, JSON-LD, OG images and the
+    RSS feed all keep their correct capitalisation — only the rendered page is
+    styled this way.
+  */
+  text-transform: lowercase;
+}
+
+/*
+  Two exceptions.
+
+  Long-form article bodies keep normal case: lowercasing several thousand
+  words costs real reading speed, and the writing section is the one place
+  that matters more than the styling does.
+
+  `.keep-case` is the manual escape hatch for anything that would be wrong
+  lowercased.
+*/
+.prose-article,
+.keep-case {
+  text-transform: none;
 }
 
 /* Lenis: the wrapper must not clip, and the content must be able to
@@ -142,12 +165,14 @@ html.lenis body {
   font-size: clamp(1.1rem, 1.9vw, 1.35rem);
 }
 
-/* Uppercase mono labels. Used for section markers, metadata, nav. */
+/* Mono labels. Used for section markers, metadata, nav. Lowercase like
+   everything else — the letter-spacing carries the label feeling without
+   needing caps. */
 .t-label {
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.16em;
-  text-transform: uppercase;
+  text-transform: lowercase;
   font-weight: 400;
 }
 
@@ -269,6 +294,15 @@ html.lenis body {
 .ground-field {
   background: transparent;
   color: var(--color-terminal-text);
+}
+
+/* For sticky chrome that has to stay legible while still letting the field
+   through behind it. */
+.ground-veil {
+  background: color-mix(in srgb, var(--color-terminal) 62%, transparent);
+  color: var(--color-terminal-text);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 .ground-paper {
   background: var(--color-paper);

@@ -139,14 +139,14 @@ export default function HomePage() {
                   data-converge
                   className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-2 border-t border-[var(--color-paper-rule)] py-7 last:border-b"
                 >
-                  <h3 className="t-h3 lowercase text-[var(--color-ink)]">
+                  <h3 className="keep-case t-h3 text-[var(--color-ink)]">
                     {role.company}
                   </h3>
-                  <p className="t-mono-sm lowercase text-[var(--color-muted)]">
+                  <p className="keep-case t-mono-sm text-[var(--color-muted)]">
                     {formatMonth(role.start)} — {formatMonth(role.end)}
                   </p>
                   <p className="col-span-2 max-w-[64ch] text-[0.95rem] leading-relaxed text-[var(--color-ink-body)]">
-                    <span className="text-[var(--color-muted)]">
+                    <span className="keep-case text-[var(--color-muted)]">
                       {role.title} ·{" "}
                     </span>
                     {role.summary}
@@ -177,14 +177,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════ 06 — the projects */}
+      {/* ══════════════════════════════════════════ 06 — denoise, the oval
+          Its own moment, deliberately near-empty. The portrait mass needs
+          open frame to resolve into — when this act was pinned to the
+          projects grid, two opaque cards sat on top of it and you couldn't
+          see it happen. */}
+      <section
+        className="ground-field relative flex min-h-[86svh] items-center"
+        data-act="denoise"
+      >
+        <div className="shell py-24">
+          <SectionLabel index="06" tone="terminal">
+            denoise
+          </SectionLabel>
+          <KineticHeading
+            as="p"
+            className="t-h2 max-w-[24ch] lowercase text-[var(--color-terminal-bright)]"
+          >
+            everything starts as noise. the job is getting it to resolve.
+          </KineticHeading>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════ 07 — the projects */}
       {projects.length > 0 && (
-        <section
-          className="ground-field relative border-y border-[var(--color-terminal-rule)]"
-          data-act="denoise"
-        >
+        <section className="ground-field relative border-y border-[var(--color-terminal-rule)]">
           <div className="shell py-24 sm:py-32">
-            <SectionLabel index="06" tone="terminal">
+            <SectionLabel index="07" tone="terminal">
               projects
             </SectionLabel>
 
@@ -197,7 +216,7 @@ export default function HomePage() {
                         {String(i + 1).padStart(2, "0")} /{" "}
                         {String(projects.length).padStart(2, "0")}
                       </p>
-                      <h3 className="t-h3 mt-5 lowercase text-[var(--color-terminal-bright)]">
+                      <h3 className="keep-case t-h3 mt-5 text-[var(--color-terminal-bright)]">
                         {p.title}
                       </h3>
                       <p className="mt-4 flex-1 text-[0.93rem] leading-relaxed text-[var(--color-terminal-dim)]">
@@ -207,7 +226,7 @@ export default function HomePage() {
                         {p.stack.slice(0, 5).map((s) => (
                           <li
                             key={s}
-                            className="t-mono-sm rounded-full border border-[var(--color-terminal-rule)] px-2.5 py-0.5 text-[0.66rem] lowercase text-[var(--color-terminal-dim)]"
+                            className="keep-case t-mono-sm rounded-full border border-[var(--color-terminal-rule)] px-2.5 py-0.5 text-[0.66rem] text-[var(--color-terminal-dim)]"
                           >
                             {s}
                           </li>
@@ -229,7 +248,7 @@ export default function HomePage() {
       {posts.length > 0 && (
         <section className="ground-paper" data-ground="paper">
           <div className="shell py-20 sm:py-24">
-            <SectionLabel index="07">writing</SectionLabel>
+            <SectionLabel index="08">writing</SectionLabel>
             <ul>
               {posts.map((post) => (
                 <li
@@ -240,7 +259,7 @@ export default function HomePage() {
                     href={`/writing/${post.slug}`}
                     className="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 py-6"
                   >
-                    <h3 className="t-h3 lowercase text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-amber-ink)]">
+                    <h3 className="keep-case t-h3 text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-amber-ink)]">
                       {post.title}
                     </h3>
                     <time
@@ -266,7 +285,7 @@ export default function HomePage() {
         data-act="constellation"
       >
         <div className="shell py-24 sm:py-32">
-          <SectionLabel index="08" tone="terminal">
+          <SectionLabel index="09" tone="terminal">
             credentials
           </SectionLabel>
 
@@ -281,7 +300,8 @@ export default function HomePage() {
                 <dt className="t-label text-[var(--color-terminal-dim)] mb-2">
                   {item.k}
                 </dt>
-                <dd className="font-[family-name:var(--font-mono)] text-[1.02rem] lowercase tracking-[-0.02em] text-[var(--color-terminal-bright)]">
+                {/* Credentials are proper nouns — degrees, awards, issuers. */}
+                <dd className="keep-case font-[family-name:var(--font-mono)] text-[1.02rem] tracking-[-0.02em] text-[var(--color-terminal-bright)]">
                   {item.v}
                 </dd>
               </div>

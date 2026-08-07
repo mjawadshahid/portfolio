@@ -47,7 +47,7 @@ export default async function PostPage({ params }: Params) {
             </Link>
           </p>
 
-          <h1 className="t-h1 mt-6 text-[var(--color-ink)]">{post.title}</h1>
+          <h1 className="keep-case t-h1 mt-6 text-[var(--color-ink)]">{post.title}</h1>
 
           <p className="t-mono-sm mt-5 flex flex-wrap gap-x-4 gap-y-1 text-[var(--color-muted)]">
             <time dateTime={post.date}>{formatDate(post.date)}</time>

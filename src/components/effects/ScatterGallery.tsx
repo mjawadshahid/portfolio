@@ -99,7 +99,10 @@ export function ScatterGallery() {
       data-gallery
     >
       <div className="shell pointer-events-none absolute top-0 left-0 right-0 z-10 pt-8">
-        <p className="t-label text-[var(--color-amber)]">05 — the long version</p>
+        <p className="t-label flex items-baseline gap-2.5">
+          <span className="text-[var(--color-amber)]">04</span>
+          <span className="text-[var(--color-terminal-dim)]">the long version</span>
+        </p>
       </div>
 
       <div

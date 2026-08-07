@@ -6,7 +6,6 @@ import * as THREE from "three";
 
 import { scrollState } from "./scrollState";
 import {
-  ambientLayout,
   tokenLayout,
   clusterLayout,
   streamLayout,
@@ -24,12 +23,13 @@ export function ParticleField({ count }: { count: number }) {
 
   const geometry = useMemo(() => {
     const g = new THREE.BufferGeometry();
-    const ambient = ambientLayout(count);
+    // The opening and closing state are the same buffer, not two similar ones.
+    const disperse = disperseLayout(count);
     const { random } = attributes(count);
 
     // `position` is required by three even though the shader ignores it.
-    g.setAttribute("position", new THREE.BufferAttribute(ambient, 3));
-    g.setAttribute("aAmbient", new THREE.BufferAttribute(ambient, 3));
+    g.setAttribute("position", new THREE.BufferAttribute(disperse, 3));
+    g.setAttribute("aDisperse", new THREE.BufferAttribute(disperse, 3));
     g.setAttribute("aToken", new THREE.BufferAttribute(tokenLayout(count), 3));
     g.setAttribute("aCluster", new THREE.BufferAttribute(clusterLayout(count), 3));
     g.setAttribute("aStream", new THREE.BufferAttribute(streamLayout(count), 3));
@@ -39,7 +39,6 @@ export function ParticleField({ count }: { count: number }) {
       "aConstellation",
       new THREE.BufferAttribute(constellationLayout(count), 3)
     );
-    g.setAttribute("aDisperse", new THREE.BufferAttribute(disperseLayout(count), 3));
     g.setAttribute("aRandom", new THREE.BufferAttribute(random, 1));
 
     // The field travels well outside its initial bounds; culling by the token

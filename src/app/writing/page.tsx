@@ -56,7 +56,7 @@ export default function WritingPage() {
                       [{String(i).padStart(2, "0")}]
                     </span>
                     <span>
-                      <span className="t-h3 block text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-amber-ink)]">
+                      <span className="keep-case t-h3 block text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-amber-ink)]">
                         {post.title}
                       </span>
                       <span className="mt-2 block max-w-[62ch] text-[0.95rem] leading-relaxed text-[var(--color-ink-body)]">

@@ -45,8 +45,17 @@ export default function Scene() {
       triggers.push(
         ScrollTrigger.create({
           trigger: el,
-          start: "top bottom",
-          end: "bottom center",
+          /*
+            The morph runs as the section arrives and is finished while you're
+            still reading its heading.
+
+            The old "top bottom" → "bottom center" window meant a state only
+            settled once the section's *bottom* reached the middle of the
+            screen — so by the time the field looked right you'd already
+            scrolled past the content it belonged to.
+          */
+          start: "top 90%",
+          end: "top 35%",
           onUpdate: (self) => {
             scrollState[act as Act] = self.progress;
           },

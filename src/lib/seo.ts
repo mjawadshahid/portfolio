@@ -11,7 +11,7 @@ import { certifications, education, currentRole } from "@/data/work";
 type PageMetaInput = {
   title: string;
   description: string;
-  /** Path with leading slash, e.g. "/aviation". */
+  /** Path with leading slash, e.g. "/work". */
   path: string;
   type?: "website" | "article";
   publishedTime?: string;

@@ -8,14 +8,8 @@ import { nav, site } from "@/lib/site";
  */
 export function Header() {
   return (
-    <header className="sticky top-0 z-40 ground-terminal border-b border-[var(--color-terminal-rule)] backdrop-blur-[2px]">
+    <header className="ground-veil sticky top-0 z-40 border-b border-[var(--color-terminal-rule)]">
       <div className="shell flex items-center gap-3 py-3 sm:gap-4">
-        <span className="hidden gap-[6px] sm:flex" aria-hidden="true">
-          <i className="block h-[9px] w-[9px] rounded-full bg-[var(--color-terminal-rule)]" />
-          <i className="block h-[9px] w-[9px] rounded-full bg-[var(--color-terminal-rule)]" />
-          <i className="block h-[9px] w-[9px] rounded-full bg-[var(--color-terminal-rule)]" />
-        </span>
-
         <Link
           href="/"
           className="t-mono-sm shrink-0 text-[var(--color-terminal-dim)] transition-colors hover:text-[var(--color-amber)]"

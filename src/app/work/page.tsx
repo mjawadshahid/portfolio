@@ -13,10 +13,7 @@ export const metadata: Metadata = pageMeta({
   path: "/work",
 });
 
-/**
- * The conventional CV view. Kept because some people screen this way, but it
- * isn't the front door — the domain pages are.
- */
+/** The conventional CV view, for people who screen that way. */
 export default function WorkPage() {
   return (
     <>
@@ -27,15 +24,14 @@ export default function WorkPage() {
             Where the three years actually went.
           </h1>
           <p className="t-body mt-7 text-[var(--color-terminal-text)]">
-            If you'd rather see this split by domain, the{" "}
-            <Link href="/aviation" className="text-[var(--color-amber)] underline underline-offset-4">
-              aviation
-            </Link>{" "}
-            and{" "}
-            <Link href="/healthcare" className="text-[var(--color-amber)] underline underline-offset-4">
-              healthcare
-            </Link>{" "}
-            pages go deeper on each.
+            the short version is on the{" "}
+            <Link
+              href="/"
+              className="text-[var(--color-amber)] underline underline-offset-4"
+            >
+              home page
+            </Link>
+            ; this is everything, in order.
           </p>
         </div>
       </section>
@@ -50,13 +46,13 @@ export default function WorkPage() {
               className="border-t border-[var(--color-paper-rule)] py-9 last:border-b"
             >
               <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                <h2 className="t-h2 text-[var(--color-ink)]">{role.company}</h2>
+                <h2 className="keep-case t-h2 text-[var(--color-ink)]">{role.company}</h2>
                 <p className="t-mono-sm text-[var(--color-muted)]">
                   {formatMonthSafe(role.start)} — {formatMonthSafe(role.end)}
                 </p>
               </div>
 
-              <p className="t-label mt-2 text-[var(--color-amber-ink)]">
+              <p className="keep-case t-label mt-2 text-[var(--color-amber-ink)]">
                 {role.title} · {role.domains.join(", ")}
               </p>
 
@@ -90,7 +86,7 @@ export default function WorkPage() {
           <dl className="grid gap-x-10 gap-y-7 sm:grid-cols-2">
             <div>
               <dt className="t-label mb-2 text-[var(--color-muted)]">Degree</dt>
-              <dd className="font-[family-name:var(--font-mono)] text-[1.05rem] tracking-[-0.02em] text-[var(--color-ink)]">
+              <dd className="keep-case font-[family-name:var(--font-mono)] text-[1.05rem] tracking-[-0.02em] text-[var(--color-ink)]">
                 {education.degree}
                 <span className="block text-[0.9rem] text-[var(--color-muted)] mt-1">
                   {education.institution} · {education.end}
@@ -99,7 +95,7 @@ export default function WorkPage() {
             </div>
             <div>
               <dt className="t-label mb-2 text-[var(--color-muted)]">Distinction</dt>
-              <dd className="font-[family-name:var(--font-mono)] text-[1.05rem] tracking-[-0.02em] text-[var(--color-ink)]">
+              <dd className="keep-case font-[family-name:var(--font-mono)] text-[1.05rem] tracking-[-0.02em] text-[var(--color-ink)]">
                 {education.distinction}
                 <span className="block text-[0.9rem] text-[var(--color-muted)] mt-1">
                   CGPA {education.cgpa}
@@ -109,7 +105,7 @@ export default function WorkPage() {
             {certifications.map((c) => (
               <div key={c.name}>
                 <dt className="t-label mb-2 text-[var(--color-muted)]">Certification</dt>
-                <dd className="font-[family-name:var(--font-mono)] text-[1.05rem] tracking-[-0.02em] text-[var(--color-ink)]">
+                <dd className="keep-case font-[family-name:var(--font-mono)] text-[1.05rem] tracking-[-0.02em] text-[var(--color-ink)]">
                   {c.name}
                   <span className="block text-[0.9rem] text-[var(--color-muted)] mt-1">
                     {c.issuer}

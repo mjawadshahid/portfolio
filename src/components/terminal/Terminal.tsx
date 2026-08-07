@@ -16,7 +16,7 @@ import { run, completions, type Line } from "./commands";
 
 const BOOT: Line[] = [
   { kind: "input", text: "whoami" },
-  { kind: "accent", text: "ai engineer · 3 years · production systems" },
+  { kind: "accent", text: "i'm an ai engineer · 3 years · production systems" },
   { kind: "input", text: "ls" },
   { kind: "accent", text: "work/    projects/    writing/    speaking/    specs/" },
   { kind: "output", text: "type `help` — this one actually works" },
@@ -143,17 +143,24 @@ export function Terminal() {
               aria-label="Terminal input. Try: help, ls, cd work"
               className="w-full bg-transparent text-[var(--color-amber)] caret-transparent outline-none"
             />
-            {/* Block caret sitting after the typed text. */}
+            {/*
+              Block caret sitting after the typed text.
+
+              It blinks whether or not the input is focused — an unlit caret
+              reads as a dead decoration, and the blink is what tells people
+              the terminal is something they can actually type into. Focus
+              only changes its brightness. Reduced motion stops it via the
+              global rule in globals.css.
+            */}
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute top-1/2 -translate-y-1/2 bg-[var(--color-amber)] transition-opacity"
+              className="pointer-events-none absolute top-1/2 -translate-y-1/2 animate-[blink_1.1s_steps(1)_infinite] bg-[var(--color-amber)]"
               style={{
                 left: `${value.length}ch`,
                 width: "0.55em",
                 height: "1.05em",
                 boxShadow: "0 0 10px rgba(232,163,61,0.55)",
-                opacity: focused ? 1 : 0.45,
-                animation: focused ? "blink 1.1s steps(1) infinite" : "none",
+                filter: focused ? "none" : "brightness(0.6)",
               }}
             />
           </div>

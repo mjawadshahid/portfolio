@@ -8,7 +8,6 @@
  */
 
 export const vertexShader = /* glsl */ `
-  attribute vec3 aAmbient;
   attribute vec3 aToken;
   attribute vec3 aCluster;
   attribute vec3 aStream;
@@ -62,10 +61,10 @@ export const vertexShader = /* glsl */ `
     // Chained in scroll order — each act blends on top of the last, so the
     // field is continuous from the hero all the way to the footer.
     //
-    // It opens on aAmbient: particles everywhere, filling the frame. The
-    // sequence condenses that into meaning and then disperses it again, so
-    // the whole page is bookended by the same scattered state.
-    vec3 pos = aAmbient;
+    // It opens on aDisperse — literally the same buffer the page ends on, so
+    // the state you see at the bottom is exactly the state you see at the top.
+    // The sequence condenses it into meaning and then releases it back.
+    vec3 pos = aDisperse;
     pos = mix(pos, aToken,         t1);
     pos = mix(pos, aCluster,       t2);
     pos = mix(pos, aStream,        t3);

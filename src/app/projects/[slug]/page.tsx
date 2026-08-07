@@ -44,7 +44,7 @@ export default async function ProjectPage({ params }: Params) {
             {project.domains.join(", ")}
           </p>
 
-          <h1 className="t-h1 mt-6 max-w-[20ch] text-[var(--color-terminal-bright)]">
+          <h1 className="keep-case t-h1 mt-6 max-w-[20ch] text-[var(--color-terminal-bright)]">
             {project.title}
           </h1>
 
@@ -61,7 +61,7 @@ export default async function ProjectPage({ params }: Params) {
               {project.facts.map((f) => (
                 <div key={f.key}>
                   <dt className="t-label mb-1 text-[var(--color-muted)]">{f.key}</dt>
-                  <dd className="font-[family-name:var(--font-mono)] text-[0.98rem] tracking-[-0.02em] text-[var(--color-ink)]">
+                  <dd className="keep-case font-[family-name:var(--font-mono)] text-[0.98rem] tracking-[-0.02em] text-[var(--color-ink)]">
                     {f.value}
                   </dd>
                 </div>
@@ -80,13 +80,13 @@ export default async function ProjectPage({ params }: Params) {
           <dl className="mt-14 grid gap-x-10 gap-y-5 border-t border-[var(--color-paper-rule)] pt-8 sm:grid-cols-2">
             <div>
               <dt className="t-label mb-2 text-[var(--color-muted)]">Role</dt>
-              <dd className="text-[0.98rem] text-[var(--color-ink-body)]">
+              <dd className="keep-case text-[0.98rem] text-[var(--color-ink-body)]">
                 {project.role}
               </dd>
             </div>
             <div>
               <dt className="t-label mb-2 text-[var(--color-muted)]">Stack</dt>
-              <dd className="text-[0.98rem] text-[var(--color-ink-body)]">
+              <dd className="keep-case text-[0.98rem] text-[var(--color-ink-body)]">
                 {project.stack.join(", ")}
               </dd>
             </div>

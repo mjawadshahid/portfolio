@@ -1,6 +1,12 @@
 /**
- * Numbered section marker. The numbering is real — these are read in order on
- * the page — so it encodes something true rather than decorating.
+ * Numbered section marker.
+ *
+ * The numbering is real — these are read in order down the page — so it
+ * encodes something true rather than decorating.
+ *
+ * No trailing rule. A hairline running to the edge of every section turned
+ * into visual noise once there were nine of them, and the number plus the
+ * letter-spacing already does the work.
  */
 export function SectionLabel({
   index,
@@ -11,20 +17,14 @@ export function SectionLabel({
   children: React.ReactNode;
   tone?: "paper" | "terminal";
 }) {
-  const color =
-    tone === "paper" ? "var(--color-amber-ink)" : "var(--color-amber)";
-  const rule =
-    tone === "paper" ? "var(--color-paper-rule)" : "var(--color-terminal-rule)";
+  const accent = tone === "paper" ? "var(--color-amber-ink)" : "var(--color-amber)";
+  const muted =
+    tone === "paper" ? "var(--color-muted)" : "var(--color-terminal-dim)";
 
   return (
-    <p className="t-label flex items-center gap-3 mb-7" style={{ color }}>
-      {index ? <span>{index} —</span> : null}
-      <span>{children}</span>
-      <span
-        aria-hidden="true"
-        className="flex-1 h-px"
-        style={{ background: rule }}
-      />
+    <p className="t-label mb-7 flex items-baseline gap-2.5">
+      {index ? <span style={{ color: accent }}>{index}</span> : null}
+      <span style={{ color: muted }}>{children}</span>
     </p>
   );
 }

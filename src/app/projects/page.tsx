@@ -38,7 +38,7 @@ export default function ProjectsPage() {
                   <p className="t-label text-[var(--color-amber-ink)]">
                     {p.domains.join(" · ")}
                   </p>
-                  <h2 className="t-h3 mt-4 text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-amber-ink)]">
+                  <h2 className="keep-case t-h3 mt-4 text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-amber-ink)]">
                     {p.title}
                   </h2>
                   <p className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-[var(--color-ink-body)]">
@@ -48,7 +48,7 @@ export default function ProjectsPage() {
                     {p.stack.slice(0, 4).map((s) => (
                       <li
                         key={s}
-                        className="t-mono-sm rounded-full border border-[var(--color-paper-rule)] px-2.5 py-0.5 text-[0.68rem] text-[var(--color-muted)]"
+                        className="keep-case t-mono-sm rounded-full border border-[var(--color-paper-rule)] px-2.5 py-0.5 text-[0.68rem] text-[var(--color-muted)]"
                       >
                         {s}
                       </li>

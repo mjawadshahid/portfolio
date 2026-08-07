@@ -38,10 +38,6 @@ export default function SpecsPage() {
             <section key={group.label} className="mb-12 last:mb-0">
               <h2 className="t-label mb-5 flex items-center gap-3 text-[var(--color-amber-ink)]">
                 <span>{group.label}</span>
-                <span
-                  aria-hidden="true"
-                  className="h-px flex-1 bg-[var(--color-paper-rule)]"
-                />
               </h2>
 
               <dl>
@@ -54,8 +50,8 @@ export default function SpecsPage() {
                     <dd
                       className={
                         row.emphasis
-                          ? "text-[0.99rem] leading-relaxed font-medium text-[var(--color-ink)]"
-                          : "text-[0.99rem] leading-relaxed text-[var(--color-ink-body)]"
+                          ? "keep-case text-[0.99rem] leading-relaxed font-medium text-[var(--color-ink)]"
+                          : "keep-case text-[0.99rem] leading-relaxed text-[var(--color-ink-body)]"
                       }
                     >
                       {row.value}
@@ -69,10 +65,6 @@ export default function SpecsPage() {
           <section className="mt-14">
             <h2 className="t-label mb-5 flex items-center gap-3 text-[var(--color-amber-ink)]">
               <span>Credentials</span>
-              <span
-                aria-hidden="true"
-                className="h-px flex-1 bg-[var(--color-paper-rule)]"
-              />
             </h2>
             <dl>
               {certifications.map((c) => (
@@ -81,14 +73,14 @@ export default function SpecsPage() {
                   className="grid items-baseline gap-x-7 gap-y-1 border-t border-[var(--color-paper-rule)] py-4 sm:grid-cols-[190px_1fr]"
                 >
                   <dt className="t-label text-[var(--color-muted)]">Certification</dt>
-                  <dd className="text-[0.99rem] font-medium text-[var(--color-ink)]">
+                  <dd className="keep-case text-[0.99rem] font-medium text-[var(--color-ink)]">
                     {c.name}
                   </dd>
                 </div>
               ))}
               <div className="grid items-baseline gap-x-7 gap-y-1 border-t border-[var(--color-paper-rule)] py-4 sm:grid-cols-[190px_1fr]">
                 <dt className="t-label text-[var(--color-muted)]">Education</dt>
-                <dd className="text-[0.99rem] text-[var(--color-ink-body)]">
+                <dd className="keep-case text-[0.99rem] text-[var(--color-ink-body)]">
                   {education.degree}, {education.institution} —{" "}
                   {education.distinction}, CGPA {education.cgpa}
                 </dd>

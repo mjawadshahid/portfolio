@@ -46,10 +46,10 @@ export default function SpeakingPage() {
                 </SectionLabel>
 
                 <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-                  <h2 className="t-h2 max-w-[24ch] text-[var(--color-ink)]">
+                  <h2 className="keep-case t-h2 max-w-[24ch] text-[var(--color-ink)]">
                     {talk.title}
                   </h2>
-                  <p className="t-mono-sm text-[var(--color-muted)]">
+                  <p className="keep-case t-mono-sm text-[var(--color-muted)]">
                     <time dateTime={talk.date}>{formatDate(talk.date)}</time>
                     {talk.venue ? ` · ${talk.venue}` : ""}
                   </p>

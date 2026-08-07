@@ -12,7 +12,8 @@ export const site = {
   role: "AI Engineer",
   // Lowercase on purpose: the site sets display and body copy in lowercase.
   // Metadata and structured data use `description` below, which is not.
-  tagline: "ai engineer. i build machine learning systems that run in production.",
+  tagline:
+    "i'm an ai engineer. i build machine learning systems that run in production.",
   description:
     "AI engineer with 3+ years building production machine learning systems — optimisation, LLM tooling, and the software around them. AWS Certified Solutions Architect. Gold medallist, FAST NUCES.",
   locale: "en_US",

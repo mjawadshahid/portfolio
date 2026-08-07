@@ -39,10 +39,11 @@ export function StackGrid({
           <p className="t-mono-sm relative text-[0.66rem] text-[var(--color-terminal-dim)]">
             {String(i + 1).padStart(2, "0")}
           </p>
-          <p className="relative mt-3 font-[family-name:var(--font-mono)] text-[1.02rem] lowercase tracking-[-0.03em] text-[var(--color-terminal-bright)]">
+          {/* Product names keep their real capitalisation; the note is prose. */}
+          <p className="keep-case relative mt-3 font-[family-name:var(--font-mono)] text-[1.02rem] tracking-[-0.03em] text-[var(--color-terminal-bright)]">
             {item.label}
           </p>
-          <p className="relative mt-1.5 text-[0.82rem] lowercase leading-snug text-[var(--color-terminal-dim)]">
+          <p className="relative mt-1.5 text-[0.82rem] leading-snug text-[var(--color-terminal-dim)]">
             {item.note}
           </p>
         </li>

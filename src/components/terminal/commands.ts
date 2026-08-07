@@ -128,7 +128,10 @@ export function run(raw: string): CommandResult {
       return {
         lines: [
           echo,
-          { kind: "accent", text: "ai engineer · 3 years · production systems" },
+          {
+            kind: "accent",
+            text: "i'm an ai engineer · 3 years · production systems",
+          },
         ],
       };
 
