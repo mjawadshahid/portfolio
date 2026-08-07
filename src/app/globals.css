@@ -1,0 +1,336 @@
+@import "tailwindcss";
+
+/* ============================================================
+   AMBER PHOSPHOR
+   Two grounds, one accent that changes value depending which
+   ground it sits on. Terminal for the WebGL chapters, paper for
+   reading. See PLAN.md §7.
+   ============================================================ */
+
+@theme {
+  /* --- terminal ground --- */
+  --color-terminal: #12211f;
+  --color-terminal-raised: #1a2b29;
+  --color-terminal-rule: #243936;
+  --color-terminal-dim: #7e9a95;
+  --color-terminal-text: #c8d4d1;
+  --color-terminal-bright: #f2f4f2;
+
+  /* --- paper ground --- */
+  --color-paper: #f0efea;
+  --color-paper-raised: #e8e7e1;
+  --color-paper-rule: #d3d2cb;
+  --color-ink: #14191a;
+  --color-ink-body: #33393b;
+  --color-muted: #636b6d;
+
+  /* --- the accent, two values ---
+     amber-phosphor only ever sits on terminal ground;
+     amber-ink only ever sits on paper. Swapping them fails contrast. */
+  --color-amber: #e8a33d;
+  --color-amber-ink: #b4650e;
+
+  /* --- type --- */
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, var(--font-geist-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-newsreader), "Iowan Old Style", Charter, Georgia, serif;
+
+  /* --- motion ---
+     One easing for scroll-linked work, one for UI. Anything else
+     is noise. */
+  --ease-scroll: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-ui: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+:root {
+  color-scheme: dark;
+  --shell-bg: var(--color-terminal);
+}
+
+html {
+  background: var(--shell-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Lenis drives scrolling; native smooth would fight it. */
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  background: var(--shell-bg);
+  color: var(--color-terminal-text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Lenis: the wrapper must not clip, and the content must be able to
+   translate. These four rules are the whole integration. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   TYPE SCALE
+   Display is monospace, set large and optically tightened. Mono
+   at scale reads technical and editorial at once — that's the
+   whole thesis of the direction.
+   ============================================================ */
+
+.t-display {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  font-size: clamp(2.6rem, 9vw, 8rem);
+  text-wrap: balance;
+}
+
+.t-h1 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.038em;
+  font-size: clamp(2rem, 5.2vw, 3.6rem);
+  text-wrap: balance;
+}
+
+.t-h2 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.032em;
+  font-size: clamp(1.5rem, 3.4vw, 2.25rem);
+  text-wrap: balance;
+}
+
+.t-h3 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.022em;
+  font-size: clamp(1.1rem, 1.9vw, 1.35rem);
+}
+
+/* Uppercase mono labels. Used for section markers, metadata, nav. */
+.t-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.t-mono-sm {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.t-body {
+  font-size: 1.02rem;
+  line-height: 1.62;
+  max-width: 62ch;
+}
+
+/* The serif appears here and nowhere else. Confining it to article
+   bodies is what stops the site reading as a blog everywhere. */
+.prose-article {
+  font-family: var(--font-serif);
+  font-size: 1.14rem;
+  line-height: 1.68;
+  color: var(--color-ink-body);
+}
+.prose-article > * + * {
+  margin-top: 1.35em;
+}
+.prose-article h2 {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin-top: 2.4em;
+}
+.prose-article h3 {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin-top: 2em;
+}
+.prose-article p,
+.prose-article ul,
+.prose-article ol {
+  max-width: 68ch;
+}
+.prose-article ul,
+.prose-article ol {
+  padding-left: 1.3em;
+}
+.prose-article li + li {
+  margin-top: 0.5em;
+}
+.prose-article a {
+  color: var(--color-amber-ink);
+  text-underline-offset: 3px;
+}
+.prose-article blockquote {
+  border-left: 2px solid var(--color-amber-ink);
+  padding-left: 1.2em;
+  font-style: italic;
+  color: var(--color-muted);
+}
+.prose-article code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--color-paper-raised);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+.prose-article pre {
+  background: var(--color-terminal);
+  color: var(--color-terminal-text);
+  padding: 1.1rem 1.2rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.prose-article pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+.prose-article img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+
+.shell {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.shell-narrow {
+  width: 100%;
+  max-width: 780px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2rem);
+}
+
+/* Sections declare their ground. The fixed WebGL canvas sits behind
+   everything at z-index -1, so any section that wants to show it
+   simply stays transparent. */
+.ground-terminal {
+  background: var(--color-terminal);
+  color: var(--color-terminal-text);
+}
+.ground-paper {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+.ground-paper-raised {
+  background: var(--color-paper-raised);
+  color: var(--color-ink);
+}
+.ground-none {
+  background: transparent;
+}
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+
+:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.ground-paper :focus-visible,
+.ground-paper-raised :focus-visible {
+  outline-color: var(--color-amber-ink);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-amber);
+  color: var(--color-terminal);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reduced motion is a real path, not a courtesy. Lenis is not
+   started, ScrollTrigger scrubs are replaced with static end states,
+   and the canvas does not mount. See src/webgl/Stage.tsx. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Anything that only makes sense once JS has booted. Progressive
+   enhancement: the no-JS render is complete and readable. */
+.js-only {
+  display: none;
+}
+.js .js-only {
+  display: revert;
+}
+.js .no-js-only {
+  display: none;
+}

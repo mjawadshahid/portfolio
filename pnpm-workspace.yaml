@@ -1,0 +1,5 @@
+# pnpm 11 reads build-script approvals from here rather than package.json.
+# sharp is Next.js's image optimiser; its install script fetches the
+# platform-specific binary, so it has to be allowed to run.
+allowBuilds:
+  sharp: true
