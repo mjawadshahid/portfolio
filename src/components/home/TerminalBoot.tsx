@@ -47,7 +47,7 @@ export function TerminalBoot() {
   const visible = (i: number) => !playing || step >= i;
 
   return (
-    <div className="font-[family-name:var(--font-mono)] text-[0.82rem] leading-[1.9] sm:text-[0.9rem]">
+    <div className="font-[family-name:var(--font-mono)] text-[0.7rem] leading-[1.9] sm:text-[0.9rem]">
       {LINES.map((line, i) => (
         <div key={line.prompt}>
           <div

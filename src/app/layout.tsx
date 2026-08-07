@@ -60,22 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       className={`${GeistSans.variable} ${GeistMono.variable} ${newsreader.variable}`}
-      // The inline script below adds a `js` class before hydration, which is
-      // by definition a server/client mismatch. Expected, and the whole point.
-      suppressHydrationWarning
     >
-      <head>
-        {/*
-          Marks the document as JS-capable before first paint, so
-          progressive-enhancement styles don't flash. The no-JS render is
-          complete and readable on its own.
-        */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `document.documentElement.classList.add('js')`,
-          }}
-        />
-      </head>
       <body>
         <a className="skip-link" href="#main">
           Skip to content

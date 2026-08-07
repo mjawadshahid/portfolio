@@ -338,14 +338,18 @@ html.lenis body {
   }
 }
 
-/* Anything that only makes sense once JS has booted. Progressive
-   enhancement: the no-JS render is complete and readable. */
+/* Progressive enhancement without a class-flipping inline script — that
+   approach guarantees a hydration mismatch on <html>, and `scripting` is
+   the CSS-native answer. The no-JS render is complete and readable, so
+   these are only ever used for controls that genuinely need JS. */
 .js-only {
   display: none;
 }
-.js .js-only {
-  display: revert;
-}
-.js .no-js-only {
-  display: none;
+@media (scripting: enabled) {
+  .js-only {
+    display: revert;
+  }
+  .no-js-only {
+    display: none;
+  }
 }

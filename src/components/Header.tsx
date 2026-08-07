@@ -9,8 +9,8 @@ import { nav, site } from "@/lib/site";
 export function Header() {
   return (
     <header className="sticky top-0 z-40 ground-terminal border-b border-[var(--color-terminal-rule)] backdrop-blur-[2px]">
-      <div className="shell flex items-center gap-4 py-3">
-        <span className="flex gap-[6px]" aria-hidden="true">
+      <div className="shell flex items-center gap-3 py-3 sm:gap-4">
+        <span className="hidden gap-[6px] sm:flex" aria-hidden="true">
           <i className="block h-[9px] w-[9px] rounded-full bg-[var(--color-terminal-rule)]" />
           <i className="block h-[9px] w-[9px] rounded-full bg-[var(--color-terminal-rule)]" />
           <i className="block h-[9px] w-[9px] rounded-full bg-[var(--color-terminal-rule)]" />
@@ -18,18 +18,29 @@ export function Header() {
 
         <Link
           href="/"
-          className="t-mono-sm text-[var(--color-terminal-dim)] hover:text-[var(--color-amber)] transition-colors"
+          className="t-mono-sm shrink-0 text-[var(--color-terminal-dim)] transition-colors hover:text-[var(--color-amber)]"
         >
-          ~/{site.url.replace("https://", "")}
+          {/* The full path is a nice touch, but it isn't worth a line of
+              vertical space on a phone. */}
+          <span className="hidden sm:inline">~/{site.url.replace("https://", "")}</span>
+          <span className="sm:hidden">~/js</span>
         </Link>
 
-        <nav aria-label="Main" className="ml-auto">
-          <ul className="flex flex-wrap items-center gap-x-5 gap-y-1 justify-end">
+        {/*
+          One row, always. On narrow screens it scrolls horizontally rather
+          than wrapping to three lines — no menu button, no JS, everything
+          still reachable.
+        */}
+        <nav
+          aria-label="Main"
+          className="-mx-1 ml-auto min-w-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          <ul className="flex w-max items-center gap-x-4 px-1 sm:gap-x-5">
             {nav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="t-label text-[var(--color-terminal-dim)] hover:text-[var(--color-amber)] transition-colors"
+                  className="t-label whitespace-nowrap text-[var(--color-terminal-dim)] transition-colors hover:text-[var(--color-amber)]"
                 >
                   {item.label}
                 </Link>
