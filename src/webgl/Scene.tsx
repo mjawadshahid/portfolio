@@ -46,16 +46,27 @@ export default function Scene() {
         ScrollTrigger.create({
           trigger: el,
           /*
-            The morph runs as the section arrives and is finished while you're
-            still reading its heading.
+            The morph starts the moment the section peeks in and runs for at
+            least a full screen of scrolling, so a shape has room to travel
+            rather than snapping between states.
 
-            The old "top bottom" → "bottom center" window meant a state only
-            settled once the section's *bottom* reached the middle of the
-            screen, so by the time the field looked right you'd already
-            scrolled past the content it belonged to.
+            Two earlier versions were both wrong. "top bottom" → "bottom
+            center" finished a whole section late, so the field only looked
+            right once you'd scrolled past the content it belonged to.
+            "top 90%" → "top 35%" fixed the lateness but left barely half a
+            screen of travel, so a short scroll blew through the entire
+            transition.
+
+            The distance scales with the section's own height, with a floor of
+            1.15 screens so short sections still get a proper run.
           */
-          start: "top 90%",
-          end: "top 35%",
+          start: "top bottom",
+          end: () =>
+            `+=${Math.max(
+              (el as HTMLElement).offsetHeight,
+              window.innerHeight * 1.15
+            )}`,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
             scrollState[act as Act] = self.progress;
           },
