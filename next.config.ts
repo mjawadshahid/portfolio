@@ -3,11 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
-  // The WebGL layer is decoration; it must never be able to break a build or a page.
-  // Everything meaningful is server-rendered HTML underneath it.
-  experimental: {
-    optimizePackageImports: ["@react-three/drei", "three"],
-  },
+  /*
+    `experimental.optimizePackageImports` for three/drei was removed: in dev it
+    corrupted the client module graph for the home route, so any client
+    component imported by app/page.tsx resolved to an undefined factory
+    ("Cannot read properties of undefined (reading 'call')"). The WebGL bundle
+    is already code-split behind a dynamic import, so the flag bought nothing.
+  */
 
   images: {
     formats: ["image/avif", "image/webp"],

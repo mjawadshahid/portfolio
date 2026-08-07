@@ -4,9 +4,9 @@
   "private": true,
   "description": "Personal site for Jawad Shahid — AI engineer, aviation and healthcare.",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3100",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
   },

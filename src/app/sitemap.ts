@@ -8,13 +8,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: site.url, lastModified: now, changeFrequency: "monthly", priority: 1 },
-    // The domain pages carry the non-brand SEO, so they rank above /work here.
-    { url: `${site.url}/aviation`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${site.url}/healthcare`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${site.url}/writing`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${site.url}/projects`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${site.url}/work`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${site.url}/specs`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${site.url}/writing`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${site.url}/work`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${site.url}/projects`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${site.url}/specs`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${site.url}/speaking`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
   ];
 

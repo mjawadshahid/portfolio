@@ -1,7 +1,6 @@
 /**
- * Single source of truth for anything that appears in metadata, structured
- * data, the sitemap or the RSS feed. Changing a name or a handle here changes
- * it everywhere, including the JSON-LD.
+ * Single source of truth for anything appearing in metadata, structured data,
+ * the sitemap or the RSS feed.
  *
  * Anything marked TODO(jawad) is a placeholder I could not source. Grep for it.
  */
@@ -11,11 +10,11 @@ export const site = {
   name: "Jawad Shahid",
   shortName: "JS",
   role: "AI Engineer",
-  tagline: "AI engineer working in aviation and healthcare.",
+  tagline: "AI engineer. I build machine learning systems that run in production.",
   description:
-    "AI engineer with 3+ years building production machine learning systems — ground operations optimisation in aviation, and clinical software in healthcare. AWS Certified Solutions Architect.",
+    "AI engineer with 3+ years building production machine learning systems — optimisation, LLM tooling, and the software around them. AWS Certified Solutions Architect. Gold medallist, FAST NUCES.",
   locale: "en_US",
-  // TODO(jawad): confirm city. Country inferred from FAST NUCES.
+  // TODO(jawad): confirm city.
   location: { city: "Lahore", region: "Punjab", country: "Pakistan", countryCode: "PK" },
   // TODO(jawad): confirm the address you want public.
   email: "hello@jawadshahid.dev",
@@ -30,7 +29,6 @@ export const socials = {
   x: "",
 } as const;
 
-/** Only non-empty socials end up in `sameAs` and the footer. */
 export const socialList = Object.entries(socials)
   .filter(([, href]) => href.length > 0)
   .map(([key, href]) => ({
@@ -40,32 +38,60 @@ export const socialList = Object.entries(socials)
   }));
 
 export const nav = [
-  { href: "/aviation", label: "Aviation" },
-  { href: "/healthcare", label: "Healthcare" },
   { href: "/work", label: "Work" },
+  { href: "/projects", label: "Projects" },
   { href: "/writing", label: "Writing" },
   { href: "/speaking", label: "Speaking" },
   { href: "/specs", label: "Specs" },
 ] as const;
 
+/**
+ * Industries worked in. These are *tags* — useful context on a project or a
+ * role, and nothing more. They are not the site's structure.
+ */
 export type Domain = "aviation" | "healthcare";
 
-export const domains: Record<
-  Domain,
-  { slug: Domain; label: string; blurb: string; description: string }
-> = {
-  aviation: {
-    slug: "aviation",
-    label: "Aviation",
-    blurb: "Ground operations, and the assignment problem underneath it.",
-    description:
-      "Ground handling operations software and the AI that decides which driver gets which task — assignment under real constraints, reassigned faster than the ramp changes.",
-  },
-  healthcare: {
-    slug: "healthcare",
-    label: "Healthcare",
-    blurb: "Clinical software, and AI that clinicians will actually use.",
-    description:
-      "Patient management systems, automated checkup report generation, and decision support built for doctors and clinical organisations.",
-  },
+export const domainLabels: Record<Domain, string> = {
+  aviation: "Aviation",
+  healthcare: "Healthcare",
 };
+
+/**
+ * What I actually do, which is broader than any one industry. This is the
+ * spine of the home page.
+ *
+ * TODO(jawad): edit freely — these should be the things you want to be hired
+ * for, in your own words.
+ */
+export const capabilities = [
+  {
+    key: "optimisation",
+    title: "Optimisation and scheduling",
+    blurb:
+      "Assignment and routing problems under real constraints, re-solved live as conditions change rather than planned once and hoped for.",
+  },
+  {
+    key: "llm",
+    title: "LLM systems that hold up",
+    blurb:
+      "Retrieval, structured extraction and generation, with evaluation harnesses — because the interesting part is what happens when the model is wrong.",
+  },
+  {
+    key: "platform",
+    title: "Production ML platform",
+    blurb:
+      "Serving, versioning, monitoring, cost and latency budgets. The unglamorous work that decides whether a model survives contact with users.",
+  },
+  {
+    key: "product",
+    title: "The software around the model",
+    blurb:
+      "Operational dashboards, internal tools and the interfaces people actually run their day on. A model nobody can override gets switched off.",
+  },
+  {
+    key: "cloud",
+    title: "Cloud architecture",
+    blurb:
+      "AWS end to end, certified Solutions Architect. Infrastructure as code, CI/CD, and designing for the bill as well as the benchmark.",
+  },
+] as const;
