@@ -4,7 +4,7 @@ import { certifications, education, currentRole } from "@/data/work";
 
 /**
  * Metadata and structured data. The whole SEO thesis is that the WebGL layer
- * is decoration and the DOM carries everything — so this file matters more to
+ * is decoration and the DOM carries everything, so this file matters more to
  * ranking than the entire src/webgl directory does. See PLAN.md §4.
  */
 
@@ -77,7 +77,7 @@ export function personSchema() {
     alumniOf: {
       "@type": "CollegeOrUniversity",
       name: education.institution,
-      description: `${education.degree} — ${education.distinction}, CGPA ${education.cgpa}`,
+      description: `${education.degree}, ${education.distinction}, CGPA ${education.cgpa}`,
     },
     hasCredential: certifications.map((c) => ({
       "@type": "EducationalOccupationalCredential",

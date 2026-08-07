@@ -12,7 +12,7 @@ import { scrollState, ACTS, type Act } from "./scrollState";
  * The fixed canvas layer.
  *
  * Sits at z-index -1 behind the whole document; sections that want it visible
- * stay transparent. It runs for the *entire* page — the dark bands are
+ * stay transparent. It runs for the *entire* page, the dark bands are
  * interleaved with paper document sections all the way down, so the field
  * keeps reappearing instead of being hidden away after the hero.
  *
@@ -51,7 +51,7 @@ export default function Scene() {
 
             The old "top bottom" → "bottom center" window meant a state only
             settled once the section's *bottom* reached the middle of the
-            screen — so by the time the field looked right you'd already
+            screen, so by the time the field looked right you'd already
             scrolled past the content it belonged to.
           */
           start: "top 90%",
@@ -64,22 +64,25 @@ export default function Scene() {
     }
 
     /**
-     * Paper sections tell the field to invert its palette rather than
-     * switching off, so it can still run under light content.
+     * Paper sections are opaque, so while one covers the canvas the field is
+     * invisible. Freeze it there rather than letting it morph unwatched.
+     *
+     * The window is generous on both ends: the section starts covering the
+     * middle of the screen well before its top edge reaches it, and the next
+     * act's trigger has usually already begun firing by then.
      */
-    document.querySelectorAll("[data-ground='paper']").forEach((el) => {
+    const paper = document.querySelectorAll("[data-ground='paper']");
+    let covering = 0;
+
+    paper.forEach((el) => {
       triggers.push(
         ScrollTrigger.create({
           trigger: el,
-          start: "top 60%",
-          end: "bottom 40%",
+          start: "top 75%",
+          end: "bottom 25%",
           onToggle: (self) => {
-            gsap.to(scrollState, {
-              lightness: self.isActive ? 1 : 0,
-              duration: 0.6,
-              ease: "power2.out",
-              overwrite: true,
-            });
+            covering += self.isActive ? 1 : -1;
+            scrollState.occluded = covering > 0;
           },
         })
       );

@@ -9,7 +9,7 @@ import { pageMeta, breadcrumbSchema } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   title: "Work",
   description:
-    "Full working history — AI and software engineering across aviation ground operations and clinical healthcare systems.",
+    "Full working history: AI and software engineering across aviation ground operations and clinical healthcare systems.",
   path: "/work",
 });
 
@@ -43,12 +43,12 @@ export default function WorkPage() {
           {roles.map((role) => (
             <article
               key={role.company}
-              className="border-t border-[var(--color-paper-rule)] py-9 last:border-b"
+              className="py-9"
             >
               <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
                 <h2 className="keep-case t-h2 text-[var(--color-ink)]">{role.company}</h2>
                 <p className="t-mono-sm text-[var(--color-muted)]">
-                  {formatMonthSafe(role.start)} — {formatMonthSafe(role.end)}
+                  {formatMonthSafe(role.start)} → {formatMonthSafe(role.end)}
                 </p>
               </div>
 
@@ -68,7 +68,7 @@ export default function WorkPage() {
                       aria-hidden="true"
                       className="t-mono-sm translate-y-[2px] text-[var(--color-amber-ink)]"
                     >
-                      —
+                      ,
                     </span>
                     <span className="max-w-[64ch]">{h}</span>
                   </li>
@@ -114,13 +114,6 @@ export default function WorkPage() {
               </div>
             ))}
           </dl>
-
-          <Link
-            href="/specs"
-            className="t-mono-sm mt-10 inline-block text-[var(--color-amber-ink)] hover:underline underline-offset-4"
-          >
-            Full tech specs →
-          </Link>
         </div>
       </section>
 

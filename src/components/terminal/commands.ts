@@ -4,7 +4,7 @@ import { site, socials, nav } from "@/lib/site";
  * The shell's command table.
  *
  * Kept as data rather than a switch so `help` and tab-completion are derived
- * from the same source the executor uses — there's no way for them to drift.
+ * from the same source the executor uses, there's no way for them to drift.
  */
 
 export type Line =
@@ -26,17 +26,17 @@ const SECTIONS = nav.map((n) => n.href.replace("/", ""));
 
 const FILES: Record<string, string[]> = {
   "about.txt": [
-    `${site.name} — ${site.role}`,
+    `${site.name} · ${site.role}`,
     "",
     "Three years building machine learning systems that run in production.",
     "Optimisation and scheduling, LLM systems with real evaluation, and the",
     "software around the model that makes it usable.",
     "",
-    "Shipped in aviation ground operations and clinical healthcare — two",
+    "Shipped in aviation ground operations and clinical healthcare, two",
     "industries where being wrong has consequences.",
   ],
   "education.txt": [
-    "FAST NUCES — BS Software Engineering",
+    "FAST NUCES, BS Software Engineering",
     "Gold Medal, 1st in class",
     "CGPA 3.88",
   ],

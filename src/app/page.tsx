@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { site, capabilities, domainLabels } from "@/lib/site";
+import { site, domainLabels } from "@/lib/site";
 import { roles, education, certifications } from "@/data/work";
 import { toolbox } from "@/data/toolbox";
 import { getPosts, getProjects, formatMonth, formatDate } from "@/lib/content";
@@ -18,8 +18,11 @@ import { TiltCard } from "@/components/effects/TiltCard";
  * The home page.
  *
  * Dark WebGL bands are interleaved with paper document sections the whole way
- * down. `data-act` marks which state the canvas should be in;
- * `data-ground="paper"` tells it to invert its palette rather than switch off.
+ * down. `data-act` marks which state the canvas should be in, and the order
+ * these appear in must match the ACTS order in src/webgl/scrollState.ts, since
+ * the shader chains its blends in that sequence. `data-ground="paper"` marks
+ * an opaque section, which freezes the field rather than letting it morph
+ * where nobody can see it.
  *
  * Every act is real DOM. Delete src/webgl and this page is still complete,
  * readable and crawlable.
@@ -32,12 +35,12 @@ export default function HomePage() {
     <>
       <InferenceStage />
 
-      {/* ═══════════════════════════════════════════ hero — a working shell */}
+      {/* ═══════════════════════════════════════════ hero, a working shell */}
       <section className="ground-field relative flex min-h-[94svh] flex-col justify-center">
         <div className="shell py-20">
           <Terminal />
 
-          <h1 className="t-display mt-10 lowercase text-[var(--color-terminal-bright)]">
+          <h1 className="t-display mt-10 text-[var(--color-terminal-bright)]">
             jawad shahid
           </h1>
 
@@ -48,51 +51,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════ 01 — tokenize */}
-      <section
-        className="ground-field relative border-t border-[var(--color-terminal-rule)]"
-        data-act="tokenize"
-      >
-        <div className="shell py-28 sm:py-36">
-          <SectionLabel index="01" tone="terminal">
-            what i do
-          </SectionLabel>
-
-          <KineticHeading
-            as="h2"
-            className="t-h2 max-w-[24ch] lowercase text-[var(--color-terminal-bright)]"
-          >
-            anyone can get a model working. the job is keeping it working.
-          </KineticHeading>
-
-          <ul className="mt-16 grid gap-px border border-[var(--color-terminal-rule)] bg-[var(--color-terminal-rule)] sm:grid-cols-2 lg:grid-cols-3">
-            {capabilities.map((c, i) => (
-              <li key={c.key} className="ground-terminal p-8">
-                <p className="t-mono-sm text-[var(--color-amber)]">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <h3 className="t-h3 mt-4 lowercase text-[var(--color-terminal-bright)]">
-                  {c.title}
-                </h3>
-                <p className="mt-3 text-[0.93rem] leading-relaxed text-[var(--color-terminal-dim)]">
-                  {c.blurb}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      {/* ═════════════ 01 — what i do, shown rather than listed in a grid */}
+      <ScatterGallery index="01" label="what i do" />
 
       {/* ══════════════════════════════════════ 02 — the toolbox, as a wall */}
-      <section
-        className="ground-field relative border-t border-[var(--color-terminal-rule)]"
-        data-act="stream"
-      >
+      <section className="ground-field relative" data-act="stream">
         <div className="shell py-24 sm:py-32">
           <SectionLabel index="02" tone="terminal">
             toolbox
           </SectionLabel>
-          <p className="t-h3 mb-12 max-w-[34ch] lowercase text-[var(--color-terminal-dim)]">
+          <p className="t-h3 mb-12 max-w-[34ch] text-[var(--color-terminal-dim)]">
             hover one. what it&apos;s for matters more than that i&apos;ve
             touched it.
           </p>
@@ -110,40 +78,37 @@ export default function HomePage() {
 
           <KineticHeading
             as="h2"
-            className="t-h2 max-w-[26ch] lowercase text-[var(--color-terminal-bright)]"
+            className="t-h2 max-w-[26ch] text-[var(--color-terminal-bright)]"
           >
             shipped into places where being wrong has consequences.
           </KineticHeading>
 
-          <p className="t-body mt-7 lowercase text-[var(--color-terminal-dim)]">
-            aviation ground operations and clinical healthcare — regulated,
+          <p className="t-body mt-7 text-[var(--color-terminal-dim)]">
+            aviation ground operations and clinical healthcare. regulated,
             operational, and unforgiving of a demo that only works on the happy
             path.
           </p>
         </div>
       </section>
 
-      {/* ══════════════════════ 04 — the gallery, full screen and sideways */}
-      <ScatterGallery />
-
-      {/* ════════════════ the join — work assembles from left and right */}
+      {/* ═══════════════════════ 04 — the join, work assembles from the sides */}
       <section className="ground-paper" data-ground="paper">
         <div className="shell overflow-hidden py-20 sm:py-24">
-          <SectionLabel index="05">selected work</SectionLabel>
+          <SectionLabel index="04">selected work</SectionLabel>
 
           <Converge>
-            <ul>
+            <ul className="space-y-10">
               {roles.map((role) => (
                 <li
                   key={role.company}
                   data-converge
-                  className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-2 border-t border-[var(--color-paper-rule)] py-7 last:border-b"
+                  className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-2"
                 >
                   <h3 className="keep-case t-h3 text-[var(--color-ink)]">
                     {role.company}
                   </h3>
                   <p className="keep-case t-mono-sm text-[var(--color-muted)]">
-                    {formatMonth(role.start)} — {formatMonth(role.end)}
+                    {formatMonth(role.start)} → {formatMonth(role.end)}
                   </p>
                   <p className="col-span-2 max-w-[64ch] text-[0.95rem] leading-relaxed text-[var(--color-ink-body)]">
                     <span className="keep-case text-[var(--color-muted)]">
@@ -155,7 +120,7 @@ export default function HomePage() {
                     {role.domains.map((d) => (
                       <li
                         key={d}
-                        className="t-mono-sm rounded-full border border-[var(--color-paper-rule)] px-2.5 py-0.5 text-[0.66rem] lowercase text-[var(--color-muted)]"
+                        className="t-mono-sm rounded-full border border-[var(--color-paper-rule)] px-2.5 py-0.5 text-[0.66rem] text-[var(--color-muted)]"
                       >
                         {domainLabels[d]}
                       </li>
@@ -169,7 +134,7 @@ export default function HomePage() {
           <Magnetic>
             <Link
               href="/work"
-              className="t-mono-sm mt-9 inline-block lowercase text-[var(--color-amber-ink)] underline-offset-4 hover:underline"
+              className="t-mono-sm mt-12 inline-block text-[var(--color-amber-ink)] underline-offset-4 hover:underline"
             >
               full history →
             </Link>
@@ -177,33 +142,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════ 06 — denoise, the oval
-          Its own moment, deliberately near-empty. The portrait mass needs
-          open frame to resolve into — when this act was pinned to the
-          projects grid, two opaque cards sat on top of it and you couldn't
-          see it happen. */}
+      {/* ════════════════════════════════════════════ 05 — denoise, the oval
+          Deliberately near-empty. The portrait mass needs open frame to
+          resolve into; when this act shared a section with content, opaque
+          cards sat on top of it and you never saw it happen. */}
       <section
         className="ground-field relative flex min-h-[86svh] items-center"
         data-act="denoise"
       >
         <div className="shell py-24">
-          <SectionLabel index="06" tone="terminal">
+          <SectionLabel index="05" tone="terminal">
             denoise
           </SectionLabel>
           <KineticHeading
             as="p"
-            className="t-h2 max-w-[24ch] lowercase text-[var(--color-terminal-bright)]"
+            className="t-h2 max-w-[24ch] text-[var(--color-terminal-bright)]"
           >
             everything starts as noise. the job is getting it to resolve.
           </KineticHeading>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════ 07 — the projects */}
+      {/* ═══════════════════════════════════════════════ 06 — the projects */}
       {projects.length > 0 && (
-        <section className="ground-field relative border-y border-[var(--color-terminal-rule)]">
+        <section className="ground-field relative">
           <div className="shell py-24 sm:py-32">
-            <SectionLabel index="07" tone="terminal">
+            <SectionLabel index="06" tone="terminal">
               projects
             </SectionLabel>
 
@@ -211,7 +175,10 @@ export default function HomePage() {
               {projects.map((p, i) => (
                 <li key={p.slug}>
                   <TiltCard className="h-full overflow-hidden rounded-[2px] border border-[var(--color-terminal-rule)] bg-[var(--color-terminal-raised)]">
-                    <Link href={`/projects/${p.slug}`} className="flex h-full flex-col p-8">
+                    <Link
+                      href={`/projects/${p.slug}`}
+                      className="flex h-full flex-col p-8"
+                    >
                       <p className="t-mono-sm text-[var(--color-amber)]">
                         {String(i + 1).padStart(2, "0")} /{" "}
                         {String(projects.length).padStart(2, "0")}
@@ -232,7 +199,7 @@ export default function HomePage() {
                           </li>
                         ))}
                       </ul>
-                      <p className="t-mono-sm mt-6 lowercase text-[var(--color-amber)]">
+                      <p className="t-mono-sm mt-6 text-[var(--color-amber)]">
                         open →
                       </p>
                     </Link>
@@ -244,27 +211,24 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* ═══════════════════════════════════════════════════ paper: writing */}
+      {/* ═══════════════════════════════════════════════════ 07 — writing */}
       {posts.length > 0 && (
         <section className="ground-paper" data-ground="paper">
           <div className="shell py-20 sm:py-24">
-            <SectionLabel index="08">writing</SectionLabel>
-            <ul>
+            <SectionLabel index="07">writing</SectionLabel>
+            <ul className="space-y-8">
               {posts.map((post) => (
-                <li
-                  key={post.slug}
-                  className="border-t border-[var(--color-paper-rule)] last:border-b"
-                >
+                <li key={post.slug}>
                   <Link
                     href={`/writing/${post.slug}`}
-                    className="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 py-6"
+                    className="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1"
                   >
                     <h3 className="keep-case t-h3 text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-amber-ink)]">
                       {post.title}
                     </h3>
                     <time
                       dateTime={post.date}
-                      className="t-mono-sm lowercase text-[var(--color-muted)]"
+                      className="t-mono-sm text-[var(--color-muted)]"
                     >
                       {formatDate(post.date)}
                     </time>
@@ -280,12 +244,9 @@ export default function HomePage() {
       )}
 
       {/* ══════════════════════════════════════════════ 08 — constellation */}
-      <section
-        className="ground-field relative border-t border-[var(--color-terminal-rule)]"
-        data-act="constellation"
-      >
+      <section className="ground-field relative" data-act="constellation">
         <div className="shell py-24 sm:py-32">
-          <SectionLabel index="09" tone="terminal">
+          <SectionLabel index="08" tone="terminal">
             credentials
           </SectionLabel>
 
@@ -297,10 +258,10 @@ export default function HomePage() {
               { k: "cgpa", v: education.cgpa },
             ].map((item) => (
               <div key={item.k}>
-                <dt className="t-label text-[var(--color-terminal-dim)] mb-2">
+                <dt className="t-label mb-2 text-[var(--color-terminal-dim)]">
                   {item.k}
                 </dt>
-                {/* Credentials are proper nouns — degrees, awards, issuers. */}
+                {/* Proper nouns: degrees, awards, issuers. */}
                 <dd className="keep-case font-[family-name:var(--font-mono)] text-[1.02rem] tracking-[-0.02em] text-[var(--color-terminal-bright)]">
                   {item.v}
                 </dd>
@@ -315,7 +276,7 @@ export default function HomePage() {
         <div className="shell py-28 sm:py-40">
           <KineticHeading
             as="h2"
-            className="t-h1 max-w-[18ch] lowercase text-[var(--color-terminal-bright)]"
+            className="t-h1 max-w-[18ch] text-[var(--color-terminal-bright)]"
           >
             building something that has to actually work?
           </KineticHeading>
@@ -329,7 +290,7 @@ export default function HomePage() {
             </a>
           </Magnetic>
 
-          <p className="t-mono-sm mt-8 lowercase text-[var(--color-terminal-dim)]">
+          <p className="t-mono-sm mt-8 text-[var(--color-terminal-dim)]">
             or type <span className="text-[var(--color-amber)]">open linkedin</span>{" "}
             up top
           </p>

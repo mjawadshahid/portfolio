@@ -8,7 +8,6 @@
  */
 
 export const vertexShader = /* glsl */ `
-  attribute vec3 aToken;
   attribute vec3 aCluster;
   attribute vec3 aStream;
   attribute vec3 aLattice;
@@ -18,7 +17,6 @@ export const vertexShader = /* glsl */ `
   attribute float aRandom;
 
   uniform float uTime;
-  uniform float uTokenize;
   uniform float uEmbed;
   uniform float uStream;
   uniform float uGallery;
@@ -50,33 +48,41 @@ export const vertexShader = /* glsl */ `
     float stagger = aRandom * 0.26;
     float k = 1.0 / (1.0 - 0.26);
 
-    float t1 = ss((uTokenize      - stagger) * k);
-    float t2 = ss((uEmbed         - stagger) * k);
-    float t3 = ss((uStream        - stagger) * k);
-    float t4 = ss((uGallery       - stagger) * k);
-    float t5 = ss((uDenoise       - stagger) * k);
-    float t6 = ss((uConstellation - stagger) * k);
-    float t7 = ss((uDisperse      - stagger) * k);
+    float t1 = ss((uGallery       - stagger) * k);
+    float t2 = ss((uStream        - stagger) * k);
+    float t3 = ss((uEmbed         - stagger) * k);
+    float t4 = ss((uDenoise       - stagger) * k);
+    float t5 = ss((uConstellation - stagger) * k);
+    float t6 = ss((uDisperse      - stagger) * k);
 
-    // Chained in scroll order — each act blends on top of the last, so the
+    // Chained in scroll order, each act blends on top of the last, so the
     // field is continuous from the hero all the way to the footer.
     //
-    // It opens on aDisperse — literally the same buffer the page ends on, so
+    // It opens on aDisperse, literally the same buffer the page ends on, so
     // the state you see at the bottom is exactly the state you see at the top.
     // The sequence condenses it into meaning and then releases it back.
     vec3 pos = aDisperse;
-    pos = mix(pos, aToken,         t1);
-    pos = mix(pos, aCluster,       t2);
-    pos = mix(pos, aStream,        t3);
-    pos = mix(pos, aLattice,       t4);
-    pos = mix(pos, aPortrait,      t5);
-    pos = mix(pos, aConstellation, t6);
-    pos = mix(pos, aDisperse,      t7);
+    pos = mix(pos, aLattice,       t1);
+    pos = mix(pos, aStream,        t2);
+    pos = mix(pos, aCluster,       t3);
+    pos = mix(pos, aPortrait,      t4);
+    pos = mix(pos, aConstellation, t5);
+    pos = mix(pos, aDisperse,      t6);
 
     // Ambient drift, calmest while the portrait is resolved.
-    float settled = t5 * (1.0 - t6);
+    float settled = t4 * (1.0 - t5);
     float drift = 1.0 - settled * 0.8;
-    float n = hash(aToken * 1.7 + floor(uTime * 0.4));
+
+    /*
+      Per-particle phase, constant for the life of the particle.
+
+      This previously read hash(aToken * 1.7 + floor(uTime * 0.4)). That
+      floor() steps every 2.5s, and when it did, every particle's hash jumped
+      to an unrelated value and the z offset snapped, so the whole field
+      visibly twitched at a fixed interval. Drift has to be continuous in
+      time; only the phase may vary, and only per particle.
+    */
+    float n = hash(aDisperse * 1.7);
     pos.x += sin(uTime * 0.32 + aRandom * 6.28) * 0.09 * drift;
     pos.y += cos(uTime * 0.27 + aRandom * 5.13) * 0.09 * drift;
     pos.z += sin(uTime * 0.21 + n * 6.28) * 0.11 * drift;
@@ -94,7 +100,7 @@ export const vertexShader = /* glsl */ `
     gl_PointSize = max(1.0, size * (12.0 / -mv.z));
 
     vRandom = aRandom;
-    vState = t5 * (1.0 - t7);
+    vState = t4 * (1.0 - t6);
     vDepth = clamp(-mv.z / 26.0, 0.0, 1.0);
   }
 `;

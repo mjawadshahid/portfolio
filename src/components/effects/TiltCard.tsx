@@ -6,7 +6,7 @@ import { gsap } from "gsap";
 /**
  * Cursor-tracking 3D tilt with a specular sheen that follows the pointer.
  *
- * The sheen is what sells it — tilt alone reads as a gimmick, but tilt plus a
+ * The sheen is what sells it, tilt alone reads as a gimmick, but tilt plus a
  * highlight that moves like a real reflection reads as a surface.
  */
 export function TiltCard({

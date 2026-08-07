@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { nav } from "@/lib/site";
 import { run, completions, type Line } from "./commands";
 
 /**
@@ -18,8 +19,10 @@ const BOOT: Line[] = [
   { kind: "input", text: "whoami" },
   { kind: "accent", text: "i'm an ai engineer · 3 years · production systems" },
   { kind: "input", text: "ls" },
-  { kind: "accent", text: "work/    projects/    writing/    speaking/    specs/" },
-  { kind: "output", text: "type `help` — this one actually works" },
+  // Derived from `nav`, so the boot output can never drift from the real
+  // sections the way a hardcoded list does.
+  { kind: "accent", text: nav.map((n) => `${n.href.slice(1)}/`).join("    ") },
+  { kind: "output", text: "type `help`, this one actually works" },
 ];
 
 export function Terminal() {
@@ -146,7 +149,7 @@ export function Terminal() {
             {/*
               Block caret sitting after the typed text.
 
-              It blinks whether or not the input is focused — an unlit caret
+              It blinks whether or not the input is focused, an unlit caret
               reads as a dead decoration, and the blink is what tells people
               the terminal is something they can actually type into. Focus
               only changes its brightness. Reduced motion stops it via the

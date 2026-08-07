@@ -11,7 +11,7 @@ import { pageMeta, talkSchema, breadcrumbSchema } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   title: "Speaking",
   description:
-    "Talks and events — on production machine learning, optimisation, and building AI for aviation and healthcare.",
+    "Talks and events on production machine learning, optimisation, and building AI for aviation and healthcare.",
   path: "/speaking",
 });
 
@@ -39,7 +39,7 @@ export default function SpeakingPage() {
             talks.map((talk, i) => (
               <article
                 key={talk.slug}
-                className="mb-20 border-t border-[var(--color-paper-rule)] pt-10 last:mb-0"
+                className="mb-20 pt-10 last:mb-0"
               >
                 <SectionLabel index={String(i + 1).padStart(2, "0")}>
                   {talk.event}

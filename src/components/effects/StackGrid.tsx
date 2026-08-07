@@ -5,7 +5,7 @@
  *
  * This is the treatment the reference uses on its helmets wall: a base frame
  * with a second overlay frame that cross-fades in over ~0.75s, plus a label
- * and a year. Here it replaces the scrolling skills strip — a wall you can
+ * and a year. Here it replaces the scrolling skills strip, a wall you can
  * actually read and poke at, instead of a carousel moving text past you.
  *
  * Pure CSS: no JS, no observers. It works with JavaScript disabled and costs

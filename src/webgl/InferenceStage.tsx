@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
  *
  * Nothing here is on the critical path: the scene is code-split, only imported
  * on the client, and only mounted once the browser is idle *and* the device
- * has actually earned it. Act 00 has already painted by then — which is the
+ * has actually earned it. Act 00 has already painted by then, which is the
  * whole reason LCP stays under budget on a site like this.
  *
  * Three ways to end up with no canvas at all, each of them a supported path:

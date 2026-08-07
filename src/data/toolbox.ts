@@ -1,7 +1,7 @@
 /**
  * The toolbox, as a wall of tiles rather than a scrolling strip.
  *
- * Labels keep their real capitalisation — they're product names. The site is
+ * Labels keep their real capitalisation, they're product names. The site is
  * lowercase by default (see `body` in globals.css), so these render through
  * `.keep-case`. The notes are prose and stay lowercase.
  *

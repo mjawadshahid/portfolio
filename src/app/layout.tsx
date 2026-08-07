@@ -11,7 +11,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SmoothScroll } from "@/components/SmoothScroll";
 
-/** Article bodies only — see PLAN.md §7 on why the serif is confined. */
+/** Article bodies only, see PLAN.md §7 on why the serif is confined. */
 const newsreader = Newsreader({
   subsets: ["latin"],
   display: "swap",
@@ -22,8 +22,8 @@ const newsreader = Newsreader({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — ${site.role}`,
-    template: `%s — ${site.name}`,
+    default: `${site.name} · ${site.role}`,
+    template: `%s · ${site.name}`,
   },
   description: site.description,
   applicationName: site.name,

@@ -3,12 +3,12 @@ import { nav, site } from "@/lib/site";
 
 /**
  * Terminal window chrome. The three dots and the path are the cheapest way to
- * establish the register before anything else has loaded — and it's all static
+ * establish the register before anything else has loaded, and it's all static
  * HTML, so it costs nothing.
  */
 export function Header() {
   return (
-    <header className="ground-veil sticky top-0 z-40 border-b border-[var(--color-terminal-rule)]">
+    <header className="ground-veil sticky top-0 z-40">
       <div className="shell flex items-center gap-3 py-3 sm:gap-4">
         <Link
           href="/"
@@ -22,7 +22,7 @@ export function Header() {
 
         {/*
           One row, always. On narrow screens it scrolls horizontally rather
-          than wrapping to three lines — no menu button, no JS, everything
+          than wrapping to three lines, no menu button, no JS, everything
           still reachable.
         */}
         <nav

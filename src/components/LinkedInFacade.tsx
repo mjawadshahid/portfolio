@@ -25,7 +25,7 @@ export function LinkedInFacade({ url, title }: { url: string; title: string }) {
   const [loaded, setLoaded] = useState(false);
   const src = embedUrl(url);
 
-  // No parseable ID — fall back to a plain outbound link rather than an
+  // No parseable ID, fall back to a plain outbound link rather than an
   // iframe that would render an error page.
   if (!src) {
     return (
@@ -69,7 +69,7 @@ export function LinkedInFacade({ url, title }: { url: string; title: string }) {
   return (
     <iframe
       src={src}
-      title={`LinkedIn post — ${title}`}
+      title={`LinkedIn post: ${title}`}
       height={560}
       className="w-full max-w-[560px] rounded border border-[var(--color-paper-rule)]"
       loading="lazy"

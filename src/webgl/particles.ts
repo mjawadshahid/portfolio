@@ -27,38 +27,8 @@ function gaussian(rand: () => number) {
   return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
 }
 
-/** Parked far behind the camera — effectively invisible for this state. */
+/** Parked far behind the camera, effectively invisible for this state. */
 const PARKED = 60;
-
-export function tokenLayout(count: number, seed = 1): Float32Array {
-  const rand = mulberry32(seed);
-  const out = new Float32Array(count * 3);
-
-  const lines = 9;
-  const lineHeight = 0.95;
-  const width = 9;
-  const glyphs = 34;
-  const glyphW = width / glyphs;
-
-  for (let i = 0; i < count; i++) {
-    const line = Math.floor(rand() * lines);
-    const lineLength = 0.45 + ((line * 7919) % 100) / 180;
-    const glyph = Math.floor(rand() * glyphs * lineLength);
-
-    // Word gaps, so runs of glyphs read as words rather than a solid mat.
-    if (glyph % 7 === 6) {
-      out[i * 3] = 0;
-      out[i * 3 + 1] = 0;
-      out[i * 3 + 2] = PARKED;
-      continue;
-    }
-
-    out[i * 3] = -width / 2 + glyph * glyphW + rand() * glyphW * 0.72;
-    out[i * 3 + 1] = (lines / 2 - line) * lineHeight + (rand() - 0.5) * 0.2;
-    out[i * 3 + 2] = (rand() - 0.5) * 0.2;
-  }
-  return out;
-}
 
 export function clusterLayout(count: number, seed = 2): Float32Array {
   const rand = mulberry32(seed);
@@ -130,7 +100,7 @@ export function noiseLayout(count: number, seed = 3): Float32Array {
   const out = new Float32Array(count * 3);
 
   for (let i = 0; i < count; i++) {
-    // Uniform inside a sphere — evenly filled, no centre clumping.
+    // Uniform inside a sphere, evenly filled, no centre clumping.
     const u = rand();
     const v = rand();
     const w = rand();
@@ -146,7 +116,7 @@ export function noiseLayout(count: number, seed = 3): Float32Array {
 }
 
 /**
- * The resolved state — a portrait plane.
+ * The resolved state, a portrait plane.
  *
  * TODO(jawad): once there's a high-resolution portrait, this gets replaced by
  * a version that samples the image on a canvas and writes per-particle
@@ -200,7 +170,7 @@ export function constellationLayout(count: number, seed = 7): Float32Array {
 }
 
 /**
- * Blown outward past the frame — particles everywhere.
+ * Blown outward past the frame, particles everywhere.
  *
  * Used at *both* ends: it's the state the page opens on and the state it ends
  * on, from the same buffer, so top and bottom are identical rather than merely

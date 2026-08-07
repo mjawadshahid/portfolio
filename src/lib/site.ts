@@ -15,7 +15,7 @@ export const site = {
   tagline:
     "i'm an ai engineer. i build machine learning systems that run in production.",
   description:
-    "AI engineer with 3+ years building production machine learning systems — optimisation, LLM tooling, and the software around them. AWS Certified Solutions Architect. Gold medallist, FAST NUCES.",
+    "AI engineer with 3+ years building production machine learning systems: optimisation, LLM tooling, and the software around them. AWS Certified Solutions Architect. Gold medallist, FAST NUCES.",
   locale: "en_US",
   // TODO(jawad): confirm city.
   location: { city: "Lahore", region: "Punjab", country: "Pakistan", countryCode: "PK" },
@@ -45,11 +45,10 @@ export const nav = [
   { href: "/projects", label: "Projects" },
   { href: "/writing", label: "Writing" },
   { href: "/speaking", label: "Speaking" },
-  { href: "/specs", label: "Specs" },
 ] as const;
 
 /**
- * Industries worked in. These are *tags* — useful context on a project or a
+ * Industries worked in. These are *tags*, useful context on a project or a
  * role, and nothing more. They are not the site's structure.
  */
 export type Domain = "aviation" | "healthcare";
@@ -63,7 +62,7 @@ export const domainLabels: Record<Domain, string> = {
  * What I actually do, which is broader than any one industry. This is the
  * spine of the home page.
  *
- * TODO(jawad): edit freely — these should be the things you want to be hired
+ * TODO(jawad): edit freely, these should be the things you want to be hired
  * for, in your own words.
  */
 export const capabilities = [
@@ -77,7 +76,7 @@ export const capabilities = [
     key: "llm",
     title: "LLM systems that hold up",
     blurb:
-      "Retrieval, structured extraction and generation, with evaluation harnesses — because the interesting part is what happens when the model is wrong.",
+      "Retrieval, structured extraction and generation, with evaluation harnesses, because the interesting part is what happens when the model is wrong.",
   },
   {
     key: "platform",

@@ -6,7 +6,6 @@ import * as THREE from "three";
 
 import { scrollState } from "./scrollState";
 import {
-  tokenLayout,
   clusterLayout,
   streamLayout,
   latticeLayout,
@@ -30,7 +29,6 @@ export function ParticleField({ count }: { count: number }) {
     // `position` is required by three even though the shader ignores it.
     g.setAttribute("position", new THREE.BufferAttribute(disperse, 3));
     g.setAttribute("aDisperse", new THREE.BufferAttribute(disperse, 3));
-    g.setAttribute("aToken", new THREE.BufferAttribute(tokenLayout(count), 3));
     g.setAttribute("aCluster", new THREE.BufferAttribute(clusterLayout(count), 3));
     g.setAttribute("aStream", new THREE.BufferAttribute(streamLayout(count), 3));
     g.setAttribute("aLattice", new THREE.BufferAttribute(latticeLayout(count), 3));
@@ -51,7 +49,6 @@ export function ParticleField({ count }: { count: number }) {
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uTokenize: { value: 0 },
       uEmbed: { value: 0 },
       uStream: { value: 0 },
       uGallery: { value: 0 },
@@ -80,10 +77,19 @@ export function ParticleField({ count }: { count: number }) {
     const u = m.uniforms;
     u.uTime.value += delta;
 
+    /**
+     * Hold everything where it is while an opaque section covers the canvas.
+     *
+     * Time still advances so the ambient drift stays alive, but the act
+     * interpolation freezes. When the field is uncovered it eases toward
+     * whatever the target has become, so the morph plays out in view instead
+     * of having already happened behind a wall of paper.
+     */
+    if (scrollState.occluded) return;
+
     // Ease toward the scroll targets rather than tracking them exactly; this
     // is what stops the field feeling glued to the scrollbar.
     const k = 1 - Math.pow(0.001, delta);
-    u.uTokenize.value += (scrollState.tokenize - u.uTokenize.value) * k;
     u.uEmbed.value += (scrollState.embed - u.uEmbed.value) * k;
     u.uStream.value += (scrollState.stream - u.uStream.value) * k;
     u.uGallery.value += (scrollState.gallery - u.uGallery.value) * k;
@@ -102,13 +108,13 @@ export function ParticleField({ count }: { count: number }) {
     /**
      * The opening state is a wide ambient field rather than the dense token
      * block, so it can be properly visible from the first frame without
-     * reading as static behind the headline — that was only a problem when
+     * reading as static behind the headline, that was only a problem when
      * the particles were packed into a rectangle.
      *
      * It still lifts a little on scroll, mostly so entering the sequence has
      * some lift to it.
      */
-    const reveal = Math.min(1, scrollState.tokenize * 1.6);
+    const reveal = Math.min(1, scrollState.gallery * 1.6);
     const eased = reveal * reveal * (3 - 2 * reveal);
     u.uOpacity.value = 0.62 + eased * 0.3;
     u.uSize.value = 2.9 + eased * 1.2;

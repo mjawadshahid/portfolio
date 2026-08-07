@@ -10,7 +10,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
  * four lines, and getting the order wrong is the usual cause of scroll-linked
  * animation drifting out of sync with the page.
  *
- * Under `prefers-reduced-motion` we never start Lenis at all — native scrolling
+ * Under `prefers-reduced-motion` we never start Lenis at all, native scrolling
  * stays, and every scrubbed timeline elsewhere renders its end state. That's a
  * real supported path, not a degraded one.
  */

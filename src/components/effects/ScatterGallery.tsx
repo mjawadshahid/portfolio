@@ -9,7 +9,7 @@ import { galleryColumns, type Tile } from "@/data/milestones";
 /**
  * Full-screen pinned horizontal gallery.
  *
- * Not a carousel. The strip is a column grid — columns of different widths and
+ * Not a carousel. The strip is a column grid, columns of different widths and
  * gaps, holding tiles of different heights at different vertical offsets, so
  * the composition scatters instead of marching. Each column also has a `depth`
  * that makes it drift at its own rate, which is what turns a flat strip into
@@ -18,7 +18,13 @@ import { galleryColumns, type Tile } from "@/data/milestones";
  * Under reduced motion the pin never engages and it degrades to a normal
  * horizontally-scrollable region with the same content.
  */
-export function ScatterGallery() {
+export function ScatterGallery({
+  index,
+  label,
+}: {
+  index: string;
+  label: string;
+}) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
 
@@ -100,8 +106,8 @@ export function ScatterGallery() {
     >
       <div className="shell pointer-events-none absolute top-0 left-0 right-0 z-10 pt-8">
         <p className="t-label flex items-baseline gap-2.5">
-          <span className="text-[var(--color-amber)]">04</span>
-          <span className="text-[var(--color-terminal-dim)]">the long version</span>
+          <span className="text-[var(--color-amber)]">{index}</span>
+          <span className="text-[var(--color-terminal-dim)]">{label}</span>
         </p>
       </div>
 
@@ -127,7 +133,7 @@ export function ScatterGallery() {
 
         <div className="flex w-[min(60vw,300px)] shrink-0 items-center">
           <p className="t-h3 text-[var(--color-terminal-dim)]">
-            keep going —<br />
+            keep going,<br />
             <span className="text-[var(--color-amber)]">there&apos;s more below</span>
           </p>
         </div>
@@ -137,20 +143,21 @@ export function ScatterGallery() {
 }
 
 function GalleryTile({ tile, index }: { tile: Tile; index: number }) {
-  if (tile.kind === "quote") {
+  if (tile.kind === "say") {
     return (
-      <figure
+      <div
         data-tile
         style={{
           height: `calc(${tile.h} * var(--gs) * 1px)`,
           marginTop: `calc(${tile.offset ?? 0} * var(--gs) * 1px)`,
         }}
-        className="flex items-center border-l-2 border-[var(--color-amber)] pl-4 sm:pl-6"
+        className="flex flex-col justify-center"
       >
-        <blockquote className="t-h3 lowercase text-[var(--color-terminal-bright)]">
-          {tile.text}
-        </blockquote>
-      </figure>
+        {tile.label && (
+          <p className="t-label mb-4 text-[var(--color-amber)]">{tile.label}</p>
+        )}
+        <p className="t-h3 text-[var(--color-terminal-bright)]">{tile.text}</p>
+      </div>
     );
   }
 

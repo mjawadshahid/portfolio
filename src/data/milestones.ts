@@ -1,16 +1,19 @@
 /**
- * The horizontal gallery's contents.
+ * The opening gallery's contents.
  *
  * Modelled on landonorris.com's `horizontal-grid-col` layout: columns of
- * varying height, scattered vertically, each tile captioned "title, year",
- * with pull-quotes interleaved between the photos.
+ * varying height, scattered vertically, tiles captioned "title, year", with
+ * statements interleaved between them.
  *
- * `image` is optional on purpose — real photography drops straight in when
- * you send it, and until then each tile renders a procedural plate so the
+ * This is the answer to "what i do" — capability statements sitting alongside
+ * the work that proves them, rather than a grid of feature cards.
+ *
+ * `image` is optional on purpose: real photography drops straight in when you
+ * send it, and until then each tile renders a procedural plate so the
  * composition is already correct.
  *
  * TODO(jawad): send stage photos, screenshots, team shots. Any tile with an
- * `image` will use it.
+ * `image` uses it.
  */
 
 export type Tile =
@@ -26,9 +29,10 @@ export type Tile =
       alt?: string;
     }
   | {
-      kind: "quote";
+      kind: "say";
+      /** Short label above the statement, e.g. "optimisation". */
+      label?: string;
       text: string;
-      attribution?: string;
       h: number;
       offset?: number;
     };
@@ -36,11 +40,12 @@ export type Tile =
 export type Column = {
   /** Column width in px at desktop. */
   w: number;
-  /** Gap after this column; varied widths are what break the grid rhythm. */
+  /** Gap after this column; varied widths break the grid rhythm. */
   gap: number;
   /**
-   * Parallax depth. 1 = moves with the track, <1 drifts slower (further
-   * away), >1 faster (nearer). This is what stops it reading as a flat strip.
+   * Parallax depth. 1 moves with the track, below 1 drifts slower (further
+   * away), above 1 faster (nearer). This is what stops it reading as a flat
+   * strip.
    */
   depth: number;
   tiles: Tile[];
@@ -48,81 +53,102 @@ export type Column = {
 
 export const galleryColumns: Column[] = [
   {
-    w: 380,
-    gap: 40,
-    depth: 0.92,
+    w: 420,
+    gap: 48,
+    depth: 1,
     tiles: [
-      { kind: "plate", title: "fast nuces, gold medal", year: "2022", h: 420 },
-      { kind: "plate", title: "first production model", year: "2022", h: 240, offset: 28 },
+      {
+        kind: "say",
+        label: "optimisation and scheduling",
+        text: "assignment and routing under real constraints, re-solved live as conditions change rather than planned once and hoped for.",
+        h: 280,
+        offset: 40,
+      },
+    ],
+  },
+  {
+    w: 340,
+    gap: 40,
+    depth: 0.9,
+    tiles: [
+      { kind: "plate", title: "task-to-driver assignment", year: "2024", h: 400 },
+      { kind: "plate", title: "live reassignment", year: "2025", h: 200, offset: 24 },
     ],
   },
   {
     w: 300,
     gap: 96,
-    depth: 1.08,
+    depth: 1.12,
     tiles: [
-      { kind: "plate", title: "clinical reporting", year: "2023", h: 300, offset: 150 },
+      { kind: "plate", title: "ground ops platform", year: "2024", h: 300, offset: 180 },
     ],
   },
   {
-    w: 440,
-    gap: 40,
-    depth: 1,
-    tiles: [
-      {
-        kind: "quote",
-        text: "anyone can get a model working. the job is keeping it working.",
-        h: 260,
-        offset: 60,
-      },
-      { kind: "plate", title: "patient management", year: "2023", h: 330 },
-    ],
-  },
-  {
-    w: 340,
-    gap: 64,
-    depth: 0.86,
-    tiles: [
-      { kind: "plate", title: "aws solutions architect", year: "2023", h: 380, offset: -40 },
-    ],
-  },
-  {
-    w: 400,
-    gap: 40,
-    depth: 1.14,
-    tiles: [
-      { kind: "plate", title: "neural lab", year: "2024", h: 260, offset: 200 },
-      { kind: "plate", title: "ground ops platform", year: "2024", h: 300 },
-    ],
-  },
-  {
-    w: 320,
-    gap: 96,
+    w: 430,
+    gap: 48,
     depth: 0.94,
     tiles: [
-      { kind: "plate", title: "task-to-driver assignment", year: "2024", h: 460, offset: -20 },
-    ],
-  },
-  {
-    w: 460,
-    gap: 40,
-    depth: 1.04,
-    tiles: [
       {
-        kind: "quote",
-        text: "a model nobody can override is a model that gets switched off.",
-        h: 240,
-        offset: 120,
+        kind: "say",
+        label: "llm systems that hold up",
+        text: "retrieval, structured extraction and generation, with evaluation harnesses. the interesting part is what happens when the model is wrong.",
+        h: 300,
+        offset: -30,
       },
-      { kind: "plate", title: "live reassignment", year: "2025", h: 280 },
     ],
   },
   {
     w: 360,
     gap: 40,
-    depth: 0.9,
+    depth: 1.06,
     tiles: [
-      { kind: "plate", title: "speaking", year: "2025", h: 340, offset: 40 },
+      { kind: "plate", title: "clinical reporting", year: "2023", h: 330, offset: 120 },
+      { kind: "plate", title: "patient management", year: "2023", h: 240 },
+    ],
+  },
+  {
+    w: 400,
+    gap: 96,
+    depth: 0.88,
+    tiles: [
+      {
+        kind: "say",
+        label: "production ml platform",
+        text: "serving, versioning, monitoring, cost and latency budgets. the unglamorous work that decides whether a model survives contact with users.",
+        h: 300,
+        offset: 60,
+      },
+    ],
+  },
+  {
+    w: 330,
+    gap: 40,
+    depth: 1.1,
+    tiles: [
+      { kind: "plate", title: "aws solutions architect", year: "2023", h: 420, offset: -50 },
+    ],
+  },
+  {
+    w: 420,
+    gap: 48,
+    depth: 0.96,
+    tiles: [
+      {
+        kind: "say",
+        label: "the software around the model",
+        text: "operational dashboards and internal tools. a model nobody can override is a model that gets switched off.",
+        h: 260,
+        offset: 150,
+      },
+    ],
+  },
+  {
+    w: 340,
+    gap: 40,
+    depth: 1.02,
+    tiles: [
+      { kind: "plate", title: "fast nuces, gold medal", year: "2022", h: 360, offset: 20 },
+      { kind: "plate", title: "first production model", year: "2022", h: 200 },
     ],
   },
 ];

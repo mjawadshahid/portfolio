@@ -61,14 +61,14 @@ export default async function PostPage({ params }: Params) {
             )}
           </p>
 
-          <hr className="my-10 border-[var(--color-paper-rule)]" />
+          
 
           <div className="prose-article">
             <MDXRemote source={post.body} />
           </div>
 
           {post.crossposts && (
-            <aside className="mt-16 border-t border-[var(--color-paper-rule)] pt-6">
+            <aside className="mt-16 pt-6">
               <p className="t-label mb-3 text-[var(--color-muted)]">
                 Also published at
               </p>

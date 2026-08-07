@@ -77,7 +77,7 @@ export default async function ProjectPage({ params }: Params) {
             <MDXRemote source={project.body} />
           </div>
 
-          <dl className="mt-14 grid gap-x-10 gap-y-5 border-t border-[var(--color-paper-rule)] pt-8 sm:grid-cols-2">
+          <dl className="mt-14 grid gap-x-10 gap-y-5 pt-8 sm:grid-cols-2">
             <div>
               <dt className="t-label mb-2 text-[var(--color-muted)]">Role</dt>
               <dd className="keep-case text-[0.98rem] text-[var(--color-ink-body)]">

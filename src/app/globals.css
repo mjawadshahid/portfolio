@@ -80,7 +80,7 @@ body {
   /*
     The site is set in lowercase throughout. Doing it here rather than
     lowercasing the source strings means metadata, JSON-LD, OG images and the
-    RSS feed all keep their correct capitalisation — only the rendered page is
+    RSS feed all keep their correct capitalisation, only the rendered page is
     styled this way.
   */
   text-transform: lowercase;
@@ -126,7 +126,7 @@ html.lenis body {
 /* ============================================================
    TYPE SCALE
    Display is monospace, set large and optically tightened. Mono
-   at scale reads technical and editorial at once — that's the
+   at scale reads technical and editorial at once, that's the
    whole thesis of the direction.
    ============================================================ */
 
@@ -166,7 +166,7 @@ html.lenis body {
 }
 
 /* Mono labels. Used for section markers, metadata, nav. Lowercase like
-   everything else — the letter-spacing carries the label feeling without
+   everything else, the letter-spacing carries the label feeling without
    needing caps. */
 .t-label {
   font-family: var(--font-mono);
@@ -284,7 +284,7 @@ html.lenis body {
 
 /* Sections declare their ground. The fixed WebGL canvas sits behind
    everything at z-index -1, so any section that wants to show it
-   simply stays transparent — that's what .ground-field is for. */
+   simply stays transparent, that's what .ground-field is for. */
 .ground-terminal {
   background: var(--color-terminal);
   color: var(--color-terminal-text);
@@ -394,7 +394,7 @@ html.lenis body {
   }
 }
 
-/* Progressive enhancement without a class-flipping inline script — that
+/* Progressive enhancement without a class-flipping inline script, that
    approach guarantees a hydration mismatch on <html>, and `scripting` is
    the CSS-native answer. The no-JS render is complete and readable, so
    these are only ever used for controls that genuinely need JS. */

@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMeta({
 });
 
 /**
- * The index is rendered as a token stream — each post title chipped, with an
+ * The index is rendered as a token stream, each post title chipped, with an
  * index and a reading cost, the way a tokenizer visualiser shows you what a
  * model is actually looking at.
  */
@@ -46,7 +46,7 @@ export default function WritingPage() {
               {posts.map((post, i) => (
                 <li
                   key={post.slug}
-                  className="border-t border-[var(--color-paper-rule)] last:border-b"
+                  
                 >
                   <Link
                     href={`/writing/${post.slug}`}

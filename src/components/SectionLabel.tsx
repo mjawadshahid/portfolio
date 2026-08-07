@@ -1,7 +1,7 @@
 /**
  * Numbered section marker.
  *
- * The numbering is real — these are read in order down the page — so it
+ * The numbering is real, these are read in order down the page, so it
  * encodes something true rather than decorating.
  *
  * No trailing rule. A hairline running to the edge of every section turned

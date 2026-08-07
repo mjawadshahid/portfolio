@@ -8,7 +8,7 @@ import { pageMeta, breadcrumbSchema } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   title: "Projects",
   description:
-    "Things I've built — ground operations optimisation in aviation, clinical reporting and decision support in healthcare.",
+    "Things I've built: ground operations optimisation in aviation, clinical reporting and decision support in healthcare.",
   path: "/projects",
 });
 
@@ -28,9 +28,12 @@ export default function ProjectsPage() {
 
       <section className="ground-paper">
         <div className="shell py-16 sm:py-20">
-          <ul className="grid gap-px sm:grid-cols-2 bg-[var(--color-paper-rule)] border border-[var(--color-paper-rule)]">
+          <ul className="grid gap-3 sm:grid-cols-2">
             {projects.map((p) => (
-              <li key={p.slug} className="ground-paper">
+              <li
+                key={p.slug}
+                className="rounded-[2px] border border-[var(--color-paper-rule)]"
+              >
                 <Link
                   href={`/projects/${p.slug}`}
                   className="group flex h-full flex-col p-8 transition-colors hover:bg-[var(--color-paper-raised)]"

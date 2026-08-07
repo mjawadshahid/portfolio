@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 /**
  * Word-by-word reveal on scroll.
  *
- * The text is rendered in full as real DOM before any JS runs — the animation
+ * The text is rendered in full as real DOM before any JS runs, the animation
  * only *hides then reveals* it. A crawler, a no-JS visitor and a
  * reduced-motion visitor all get the complete heading, which is the same rule
  * the canvas layer follows.

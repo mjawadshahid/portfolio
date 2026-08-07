@@ -7,7 +7,7 @@ export function Footer() {
   return (
     // Transparent, so the particle field carries on behind the footer instead
     // of the page ending in a flat slab.
-    <footer className="ground-field border-t border-[var(--color-terminal-rule)]">
+    <footer className="ground-field">
       <div className="shell py-14">
         <div className="grid gap-10 sm:grid-cols-[1fr_auto_auto]">
           <div>
@@ -68,7 +68,7 @@ export function Footer() {
           </div>
         </div>
 
-        <p className="t-mono-sm mt-12 pt-6 border-t border-[var(--color-terminal-rule)] text-[var(--color-terminal-dim)]">
+        <p className="t-mono-sm mt-12 text-[var(--color-terminal-dim)]">
           © {year} {site.name}
         </p>
       </div>

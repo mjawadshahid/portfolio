@@ -8,7 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
  * Children slide in from alternating sides and meet in the middle as the
  * section is scrolled through.
  *
- * This is the beat between the two galleries on the reference site — after a
+ * This is the beat between the two galleries on the reference site, after a
  * horizontal run finishes, the next block assembles itself from left and right
  * rather than just appearing. It reads as a deliberate join.
  *

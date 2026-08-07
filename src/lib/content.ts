@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import { z } from "zod";
 
 /**
- * Content is files in the repo — no CMS, no runtime fetch, nothing on the
+ * Content is files in the repo, no CMS, no runtime fetch, nothing on the
  * critical path. Frontmatter is validated with Zod at build time, so a typo
  * fails `next build` rather than rendering a broken page.
  */
@@ -62,7 +62,7 @@ const talkSchema = z.object({
   /**
    * The LinkedIn post is an enhancement, never the content. LinkedIn has no
    * public API for listing your own posts, and its embed is a cross-origin
-   * iframe Google cannot read — so the talk itself lives here as real HTML and
+   * iframe Google cannot read, so the talk itself lives here as real HTML and
    * the post is a click-to-load facade. See PLAN.md §5.
    */
   linkedin: z.string().url().optional(),
