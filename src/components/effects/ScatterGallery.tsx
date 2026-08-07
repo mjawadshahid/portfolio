@@ -30,7 +30,16 @@ export function ScatterGallery() {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const ctx = gsap.context(() => {
+    /**
+     * Only pin on desktop. Hijacking vertical scroll to drive a horizontal
+     * strip fights the touch gesture users already expect, so below 1024px
+     * the strip stays a plain swipeable region with the same content.
+     *
+     * gsap.matchMedia handles the resize boundary and reverts cleanly.
+     */
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px)", () => {
       const distance = () => Math.max(0, strip.scrollWidth - window.innerWidth);
 
       const tl = gsap.timeline({
@@ -77,9 +86,9 @@ export function ScatterGallery() {
           }
         );
       });
-    }, section);
+    });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
   return (
@@ -87,6 +96,7 @@ export function ScatterGallery() {
       ref={sectionRef}
       className="relative min-h-[100svh] overflow-hidden"
       data-act="gallery"
+      data-gallery
     >
       <div className="shell pointer-events-none absolute top-0 left-0 right-0 z-10 pt-8">
         <p className="t-label text-[var(--color-amber)]">05 — the long version</p>
@@ -100,8 +110,11 @@ export function ScatterGallery() {
           <div
             key={ci}
             data-depth={col.depth}
-            style={{ width: col.w, marginRight: col.gap }}
-            className="flex shrink-0 flex-col justify-center gap-8"
+            style={{
+              width: `calc(${col.w} * var(--gs) * 1px)`,
+              marginRight: `calc(${col.gap} * var(--gs) * 1px)`,
+            }}
+            className="flex shrink-0 flex-col justify-center gap-[clamp(1rem,2vw,2rem)]"
           >
             {col.tiles.map((tile, ti) => (
               <GalleryTile key={ti} tile={tile} index={ci * 10 + ti} />
@@ -125,10 +138,13 @@ function GalleryTile({ tile, index }: { tile: Tile; index: number }) {
     return (
       <figure
         data-tile
-        style={{ height: tile.h, marginTop: tile.offset ?? 0 }}
-        className="flex items-center border-l-2 border-[var(--color-amber)] pl-6"
+        style={{
+          height: `calc(${tile.h} * var(--gs) * 1px)`,
+          marginTop: `calc(${tile.offset ?? 0} * var(--gs) * 1px)`,
+        }}
+        className="flex items-center border-l-2 border-[var(--color-amber)] pl-4 sm:pl-6"
       >
-        <blockquote className="t-h3 text-[var(--color-terminal-bright)]">
+        <blockquote className="t-h3 lowercase text-[var(--color-terminal-bright)]">
           {tile.text}
         </blockquote>
       </figure>
@@ -136,7 +152,10 @@ function GalleryTile({ tile, index }: { tile: Tile; index: number }) {
   }
 
   return (
-    <figure data-tile style={{ marginTop: tile.offset ?? 0 }}>
+    <figure
+      data-tile
+      style={{ marginTop: `calc(${tile.offset ?? 0} * var(--gs) * 1px)` }}
+    >
       {/* Caption above the tile, the way the reference does it. */}
       <figcaption className="t-mono-sm mb-3 flex items-baseline justify-between gap-4 text-[var(--color-terminal-dim)]">
         <span className="lowercase">{tile.title}</span>
@@ -144,7 +163,7 @@ function GalleryTile({ tile, index }: { tile: Tile; index: number }) {
       </figcaption>
 
       <div
-        style={{ height: tile.h }}
+        style={{ height: `calc(${tile.h} * var(--gs) * 1px)` }}
         className="group relative w-full overflow-hidden rounded-[2px] border border-[var(--color-terminal-rule)]"
       >
         {tile.image ? (

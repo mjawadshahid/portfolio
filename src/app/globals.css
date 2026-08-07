@@ -283,6 +283,28 @@ html.lenis body {
 }
 
 /* ============================================================
+   SCATTER GALLERY
+   Column widths, tile heights and vertical offsets are authored at
+   desktop scale in src/data/milestones.ts, then multiplied by --gs
+   so the composition survives down to a phone instead of columns
+   ending up wider than the screen.
+   ============================================================ */
+
+[data-gallery] {
+  --gs: 1;
+}
+@media (max-width: 1279px) {
+  [data-gallery] {
+    --gs: 0.76;
+  }
+}
+@media (max-width: 767px) {
+  [data-gallery] {
+    --gs: 0.52;
+  }
+}
+
+/* ============================================================
    ACCESSIBILITY
    ============================================================ */
 

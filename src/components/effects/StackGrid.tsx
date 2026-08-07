@@ -18,13 +18,13 @@ export function StackGrid({
 }) {
   return (
     <ul
-      className="grid gap-3 [perspective:1200px] sm:grid-cols-3 lg:grid-cols-4"
+      className="grid grid-cols-2 gap-2.5 [perspective:1200px] sm:grid-cols-3 sm:gap-3 lg:grid-cols-4"
       style={{ transformStyle: "preserve-3d" }}
     >
       {items.map((item, i) => (
         <li
           key={item.label}
-          className="group relative isolate cursor-default rounded-[2px] border border-[var(--color-terminal-rule)] bg-[var(--color-terminal-raised)] p-5 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.65,0.05,0,1)] hover:z-10 hover:-translate-y-2 hover:scale-[1.035] hover:border-[var(--color-amber)] hover:shadow-[0_18px_50px_-20px_rgba(0,0,0,0.8)]"
+          className="group relative isolate cursor-default rounded-[2px] border border-[var(--color-terminal-rule)] bg-[var(--color-terminal-raised)] p-4 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.65,0.05,0,1)] hover:z-10 hover:-translate-y-2 hover:scale-[1.035] hover:border-[var(--color-amber)] hover:shadow-[0_18px_50px_-20px_rgba(0,0,0,0.8)] sm:p-5"
         >
           {/* The overlay frame that fades in on hover. */}
           <span
