@@ -205,10 +205,15 @@ so rather than leaving it implied.
 /aviation              domain landing: the problem space, then the work
 /healthcare            domain landing: the problem space, then the work
 /work                  full chronology, for people who want the CV view
+/specs                 tech specs sheet: stack, tools, certifications
 /projects/[slug]       individual builds, tagged by domain
 /writing/[slug]        posts, tagged by domain
 /speaking              talks and events
 ```
+
+`/specs` is lifted straight from Apple's tech-specs pages: your stack, tools,
+cloud, certifications and domains as a precise spec sheet rather than a skills
+cloud. It reads as confidence, and it quietly ranks for every tool name on it.
 
 The two domain pages are the SEO workhorses. `/work` still exists for anyone
 scanning a conventional résumé, but it isn't the front door.
@@ -329,34 +334,64 @@ commits stay; phase 1 lands as a clean overwrite on top of existing history.
 
 ---
 
-## 7. Open decisions
+## 7. Design direction — "amber phosphor"
 
-**Palette — the one thing still open.** See the pitch page; Direction A
-(near-black, one electric accent) vs Direction B (editorial light with dark
-WebGL chapters). My read: your speaking photos and a blog you intend to
-actually write in both pull toward B, and B is the one nobody else in AI is
-doing. A is the safer, faster, more conventional win.
+Settled after three rounds. You liked B′'s palette but said A felt like a
+developer built it. Those were never in conflict: **the dev feeling was coming
+from the monospace and the command line, not from the black background.** So
+Direction C keeps every device from A, drops the didone serif that was making
+B read as a blog, and keeps the palette you preferred.
 
-The teardown adds a third data point: your reference site is *light-grounded
-with a desaturated dark* and one acid accent — structurally Direction B. If
-what you liked about landonorris.com is how it feels rather than specifically
-that it's moody, B gets you closer.
+The happy accident: **burnt amber on dark slate-teal is an amber phosphor
+terminal.** Real terminal themes are never `#000` — Solarized, Nord and Gruvbox
+are all tinted darks. So the coloured ground is *more* authentic than A was,
+not a compromise against it.
 
-There's also a **Direction B′** worth considering now: keep B's editorial
-light/dark structure, but replace the near-black chapters with a desaturated
-coloured ground the way Lando uses olive. Not olive — that's theirs — but the
-same *move*. A deep slate-teal or a warm ink-brown would give the dark
-chapters a temperature instead of being generic black, and it's the single
-cheapest thing that makes a palette look art-directed rather than defaulted.
-Say the word and I'll add it to the pitch page as a third slab.
+### Tokens
 
-**Fonts**, once the palette lands. Direction A wants a tight neutral grotesk —
-Söhne if you'll pay, Geist if not (free, excellent, and Vercel-native). B wants
-a didone display over a serif text face — Reckless or Editorial New if paying,
-Instrument Serif + Newsreader if not. Either way, follow the reference's
-*pairing model*: one display face carrying all the personality, one neutral
-variable face doing all the work. Mona Sans (what they use for the second role)
-is free and genuinely excellent if you want to skip that decision.
+| Role | Value | Notes |
+|---|---|---|
+| Terminal ground | `#12211F` | Dark slate-teal. Reads cockpit and clinical at once. |
+| Terminal raised | `#1A2B29` | |
+| Amber phosphor | `#E8A33D` | On dark only. Cursor, prompt output, live state. |
+| Amber ink | `#B4650E` | On paper only — the dark-ground amber fails contrast on light. |
+| Paper | `#F0EFEA` | Reading ground. |
+| Paper raised | `#E8E7E1` | Spec sheets. |
+| Ink | `#14191A` | |
+| Muted (paper) | `#636B6D` | |
+| Dim (terminal) | `#7E9A95` | |
+
+### Type — three roles, and a rule for each
+
+- **Display: monospace, set huge.** Berkeley Mono if you'll pay (it's worth it
+  at display sizes), Geist Mono if not. Mono at scale reads technical and
+  editorial simultaneously, which is the register you asked for. Tracking
+  around `-0.035em` at hero sizes.
+- **UI and running text: SF Pro.** You're on a Mac and you like Apple type;
+  it's free, it's a variable font, and it's the correct neutral workhorse.
+  Mona Sans is the fallback if we want something non-Apple.
+- **Long-form body: a serif — and only here.** `/writing/[slug]` is the one
+  place reading comfort outranks personality. Confining the serif to article
+  bodies is what stops the site feeling like a blog everywhere else.
+
+### The Apple read
+
+What transfers is structure and restraint, not styling. Cloning apple.com's
+surface reads as an impression of Apple within seconds.
+
+**Take:** the pinned scroll-scrub reveal (their product pages invented the
+grammar we're already using); the dark-chapter / light-spec-sheet rhythm
+(structurally identical to what we have); `/specs` as a real tech-specs page;
+generous air; optical tracking that tightens as type scales up.
+
+**Leave:** glassmorphism, the floating pill nav, ultra-light weights at small
+sizes, blue-to-purple gradients. Most-cloned things on the web, and they date.
+
+### Still open
+
+Nothing blocking. Two small calls once content lands: whether to pay for
+Berkeley Mono, and whether the serif for article bodies is worth licensing or
+should be a free face like Newsreader.
 
 ---
 
