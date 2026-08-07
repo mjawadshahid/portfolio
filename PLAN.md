@@ -128,9 +128,11 @@ inference pass over your own name.
   the thing you've stared at a hundred times. The chips detach and lift off the
   plane.
 - **Act 02 — Embed.** The tokens fly outward and settle as points in a vector
-  space. Your name is now a constellation. Camera drifts through it; nearby
-  clusters resolve into section labels, so this doubles as the site's
-  navigation.
+  space — and the field separates into **two dense clusters**, because your
+  career does. One is aviation, one is healthcare. The camera drifts between
+  them; each resolves into a labelled entry point. This is the site's
+  navigation, and it's the moment the visual metaphor stops being decorative:
+  the embedding has two clusters because *you* have two domains.
 - **Act 03 — Denoise.** The field turns out to be noise. Scroll scrubs the
   reverse diffusion process — noise organises, structure emerges, and across
   about a screen and a half **your portrait resolves out of it.** This is the
@@ -174,6 +176,51 @@ multiply the build cost the way it looks like it should.
 
 ---
 
+## 3.5 Content architecture — two domains
+
+The strongest thing you've told me about yourself is that the work splits
+cleanly into **aviation** and **healthcare**. That beats a flat reverse-chron
+job list on every axis: it's more memorable, it's what a hiring manager
+actually screens for, it gives the 3D field a real reason to have two clusters,
+and it targets two genuinely distinct search spaces instead of one generic one.
+
+So the site's spine is two domains, not one timeline.
+
+**Aviation** — ground operations handling software, including AI task-to-driver
+assignment optimisation. Current role at **Neural Lab**. This is an operations
+research problem wearing an AI hat (assignment under constraints, real-time
+reassignment, driver utilisation), and it's worth saying so plainly, because
+"I optimise dispatch for ground handling" is a much sharper claim than
+"I build AI systems".
+
+**Healthcare** — AI and software for clinical organisations: patient management
+systems, automated checkup report generation, clinical decision support for
+doctors. Regulated-domain experience is rare and valuable; the site should say
+so rather than leaving it implied.
+
+**Route shape:**
+
+```
+/                      the inference sequence, both clusters visible
+/aviation              domain landing: the problem space, then the work
+/healthcare            domain landing: the problem space, then the work
+/work                  full chronology, for people who want the CV view
+/projects/[slug]       individual builds, tagged by domain
+/writing/[slug]        posts, tagged by domain
+/speaking              talks and events
+```
+
+The two domain pages are the SEO workhorses. `/work` still exists for anyone
+scanning a conventional résumé, but it isn't the front door.
+
+One thing I'd want from you here: **numbers**. "Optimises task-to-driver
+assignment" is good; "cut average assignment time by X%" or "handles N daily
+turnarounds" is what makes someone stop scrolling. Even rough, even
+approximate, even NDA-safe ranges. If you can't share figures, say so and I'll
+write around it rather than leaving vague claims that read as padding.
+
+---
+
 ## 4. SEO plan
 
 The single biggest lever is that you write natively and cross-post with
@@ -206,9 +253,18 @@ canonical — which you chose. Everything else is table stakes we do properly.
 
 Result: Medium and dev.to send you readers, and Google credits your domain.
 
-**Target queries**: `Jawad Shahid` (brand — must own it outright),
-`Jawad Shahid AI engineer`, plus long-tail from the blog, which is where
-non-brand traffic will actually come from.
+**Target queries**, now that the two domains are the spine:
+
+| Tier | Queries | Where it's won |
+|---|---|---|
+| Brand | `Jawad Shahid`, `Jawad Shahid AI engineer` | Must own outright. `Person` schema + `sameAs` does most of this. |
+| Domain | `aviation AI engineer`, `ground handling optimisation`, `healthcare AI engineer`, `clinical decision support developer` | The two domain landing pages |
+| Long-tail | `task to driver assignment algorithm`, `AI generated checkup reports`, `patient management system architecture` | The blog. This is where non-brand traffic actually comes from. |
+
+The domain tier is the opportunity. "AI engineer" is unwinnable and worthless;
+"aviation AI engineer" is a real query with thin competition, and you have
+genuine authority in it. Same for the healthcare side. Two focused pages beat
+one generic one.
 
 ---
 
