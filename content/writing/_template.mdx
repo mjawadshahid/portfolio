@@ -1,0 +1,51 @@
+---
+title: Template — delete this once you have a real post
+description: Demonstrates every frontmatter field the writing pipeline supports. Marked draft, so it renders in dev and never ships.
+date: 2026-08-07
+draft: true
+domains: [aviation]
+tags: [optimisation, production-ml]
+crossposts:
+  medium: https://medium.com/@mjawadshahid/example
+  devto: https://dev.to/mjawadshahid/example
+---
+
+This file exists so the writing pipeline has something to render while you
+write your first real post. `draft: true` keeps it out of production builds,
+out of the sitemap and out of the RSS feed — but it still renders on
+`pnpm dev`, so you can see your styling against real markup.
+
+## The cross-posting rule
+
+The `crossposts` block is the single biggest SEO lever on this site, and the
+order matters:
+
+1. Publish here first.
+2. Wait until Search Console shows the post indexed — usually one to three days.
+3. Only then cross-post, with a canonical URL pointing back here. dev.to takes
+   a `canonical_url` frontmatter field; Medium's import tool sets it for you.
+
+Do it in the other order and Medium gets credited as the original.
+
+## What the styling supports
+
+Body text is set in the serif — the one place on the site a serif appears,
+because reading comfort earns it here and nowhere else. Headings stay
+monospace, so an article still reads as part of the same site.
+
+Inline `code` works, and so do fenced blocks:
+
+```python
+def assign(tasks, drivers):
+    """The interesting part is what happens when this is wrong."""
+    return solver.solve(tasks, drivers)
+```
+
+> Block quotes get an amber rule. Use them for something someone else said,
+> not for emphasis.
+
+- Lists work
+- They are set at the same measure as body text
+- Which is deliberate
+
+Delete this file when you publish something real.

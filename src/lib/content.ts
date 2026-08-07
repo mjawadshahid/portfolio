@@ -13,10 +13,22 @@ const CONTENT_DIR = path.join(process.cwd(), "content");
 
 const domainEnum = z.enum(["aviation", "healthcare"]);
 
+/**
+ * YAML parses an unquoted `2026-08-07` into a Date, and a quoted one into a
+ * string. Rather than making every author remember the quotes, accept both and
+ * normalise to `yyyy-mm-dd`.
+ */
+const dateField = z
+  .union([z.string(), z.date()])
+  .transform((v) => (v instanceof Date ? v.toISOString().slice(0, 10) : v.trim()))
+  .refine((v) => /^\d{4}-\d{2}-\d{2}$/.test(v), {
+    message: "date must be yyyy-mm-dd",
+  });
+
 const baseFields = {
   title: z.string().min(1),
   description: z.string().min(1).max(200),
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "date must be yyyy-mm-dd"),
+  date: dateField,
   draft: z.boolean().optional().default(false),
 };
 

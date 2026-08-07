@@ -1,0 +1,44 @@
+---
+title: Ground operations platform
+description: Ground handling software for airport turnarounds, with an AI layer that assigns tasks to drivers in real time.
+date: 2024-01-15
+domains: [aviation]
+role: AI Engineer, Neural Lab
+stack: [Python, Optimisation, AWS, PostgreSQL, TypeScript]
+facts:
+  - key: Domain
+    value: Airport ground handling
+  - key: Problem
+    value: Task-to-driver assignment under constraints
+  - key: Constraint
+    value: Reassignment faster than the ramp changes
+links: []
+---
+
+An aircraft turnaround is a coordination problem with a clock on it. Between
+arrival and departure, a fixed set of ground handling tasks — baggage, fuel,
+catering, cleaning, pushback — has to happen in a workable order, carried out by
+drivers who each have a location, a vehicle, a skill set and a shift.
+
+Doing that by radio works until it doesn't. One delayed inbound reshuffles
+everything downstream, and the cost of a bad assignment compounds across the
+rest of the shift.
+
+## What I built
+
+The assignment engine matches tasks to drivers under real constraints — time
+windows, equipment, location, and who is actually free. It runs continuously
+rather than as a nightly plan, so when the ramp changes the schedule changes
+with it.
+
+Around that sits the operational software the dispatchers and ramp crews use:
+the thing that makes the optimisation visible and overridable, because an
+engine that can't be overruled by someone standing on the apron is an engine
+that gets switched off.
+
+{/* TODO(jawad): the specifics that make this land —
+     - how many turnarounds / tasks / drivers it handles
+     - what improved, and against what baseline
+     - what the solver actually is, and why you chose it over the alternatives
+     - the hardest constraint to model correctly
+     Anything you can share, even as a range. */}

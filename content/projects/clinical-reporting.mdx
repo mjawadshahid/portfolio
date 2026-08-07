@@ -1,0 +1,38 @@
+---
+title: Clinical reporting and decision support
+description: AI that drafts checkup reports from clinical inputs, plus assistive tooling built so the model supports the decision rather than making it.
+date: 2023-06-10
+domains: [healthcare]
+role: AI / Software Engineer
+stack: [Python, LLMs, React, PostgreSQL, AWS]
+facts:
+  - key: Domain
+    value: Clinical and healthcare organisations
+  - key: Built
+    value: Report generation, decision support, patient management
+  - key: Constraint
+    value: A clinician has to stay accountable for the output
+links: []
+---
+
+Clinicians spend a large share of their day writing things down. Checkup
+reports in particular are highly structured, highly repetitive, and almost
+entirely derived from information that already exists somewhere in the record.
+
+## What I built
+
+An AI layer that drafts those reports from clinical inputs, and assistive
+tooling for doctors alongside it. The design constraint that shaped everything:
+the model produces a draft, and a clinician remains accountable for what is
+signed. That rules out a lot of otherwise attractive architecture — anything
+that obscures where a claim came from, or that makes editing harder than
+writing from scratch.
+
+Underneath sits the patient management system these organisations use to run
+day-to-day operations.
+
+{/* TODO(jawad): worth adding —
+     - report volume, or time saved per report
+     - how you evaluated output quality, and what you did about hallucination
+     - what you deliberately refused to automate, and why
+     - anything about the regulatory environment you worked inside */}
