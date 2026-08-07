@@ -1,10 +1,25 @@
 /**
  * The particle shader.
  *
- * Seven position attributes, one progress uniform each. The vertex stage
- * chains the blends in scroll order so the field morphs continuously from the
+ * One position attribute and one progress uniform per act. The vertex stage
+ * chains the blends in scroll order, so the field morphs continuously from the
  * top of the page to the bottom; the fragment stage tints between the cool
- * majority and the amber minority, and inverts for paper sections.
+ * majority and the amber minority.
+ *
+ * It opens on aDisperse, literally the same buffer the page closes on, so the
+ * state at the bottom is exactly the state at the top. The sequence condenses
+ * that into meaning and then releases it back.
+ *
+ * Two things worth knowing before editing:
+ *
+ * 1. Ambient drift must be continuous in time. The phase may vary per
+ *    particle but never with time. An earlier version hashed against
+ *    floor(uTime * 0.4), which stepped every 2.5s and snapped every particle
+ *    at once, so the whole field twitched on a fixed interval.
+ *
+ * 2. Keep prose out of the template literals below. Anything inside them is
+ *    shipped to every visitor and handed to the GLSL compiler at runtime;
+ *    comments up here cost nothing.
  */
 
 export const vertexShader = /* glsl */ `
@@ -55,12 +70,6 @@ export const vertexShader = /* glsl */ `
     float t5 = ss((uConstellation - stagger) * k);
     float t6 = ss((uDisperse      - stagger) * k);
 
-    // Chained in scroll order, each act blends on top of the last, so the
-    // field is continuous from the hero all the way to the footer.
-    //
-    // It opens on aDisperse, literally the same buffer the page ends on, so
-    // the state you see at the bottom is exactly the state you see at the top.
-    // The sequence condenses it into meaning and then releases it back.
     vec3 pos = aDisperse;
     pos = mix(pos, aLattice,       t1);
     pos = mix(pos, aStream,        t2);
@@ -73,22 +82,11 @@ export const vertexShader = /* glsl */ `
     float settled = t4 * (1.0 - t5);
     float drift = 1.0 - settled * 0.8;
 
-    /*
-      Per-particle phase, constant for the life of the particle.
-
-      This previously read hash(aToken * 1.7 + floor(uTime * 0.4)). That
-      floor() steps every 2.5s, and when it did, every particle's hash jumped
-      to an unrelated value and the z offset snapped, so the whole field
-      visibly twitched at a fixed interval. Drift has to be continuous in
-      time; only the phase may vary, and only per particle.
-    */
     float n = hash(aDisperse * 1.7);
     pos.x += sin(uTime * 0.32 + aRandom * 6.28) * 0.09 * drift;
     pos.y += cos(uTime * 0.27 + aRandom * 5.13) * 0.09 * drift;
     pos.z += sin(uTime * 0.21 + n * 6.28) * 0.11 * drift;
 
-    // Scroll velocity smears the field along its travel direction, so hard
-    // scrolling feels like it's moving something rather than just scrubbing.
     pos.y -= uVelocity * (0.4 + aRandom * 0.9);
 
     pos.xy += uPointer * (0.28 + aRandom * 0.22);
@@ -120,8 +118,6 @@ export const fragmentShader = /* glsl */ `
   varying float vDepth;
 
   void main() {
-    // Round point, soft edge. Discarding early is cheaper than blending a
-    // full quad tens of thousands of times.
     vec2 c = gl_PointCoord - vec2(0.5);
     float d = dot(c, c);
     if (d > 0.25) discard;
@@ -131,8 +127,6 @@ export const fragmentShader = /* glsl */ `
     // A minority burn amber; the share rises as the field resolves.
     float amberMix = step(vRandom, 0.16 + vState * 0.3);
 
-    // On paper sections the palette inverts rather than the canvas switching
-    // off, so the field can keep running under light content.
     vec3 cool = mix(uDim, uDimLight, uLightness);
     vec3 warm = mix(uAmber, uAmberLight, uLightness);
     vec3 color = mix(cool, warm, amberMix);
