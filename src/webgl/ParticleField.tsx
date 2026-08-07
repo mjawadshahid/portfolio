@@ -6,7 +6,6 @@ import * as THREE from "three";
 
 import { scrollState } from "./scrollState";
 import {
-  clusterLayout,
   streamLayout,
   latticeLayout,
   portraitLayout,
@@ -29,7 +28,6 @@ export function ParticleField({ count }: { count: number }) {
     // `position` is required by three even though the shader ignores it.
     g.setAttribute("position", new THREE.BufferAttribute(disperse, 3));
     g.setAttribute("aDisperse", new THREE.BufferAttribute(disperse, 3));
-    g.setAttribute("aCluster", new THREE.BufferAttribute(clusterLayout(count), 3));
     g.setAttribute("aStream", new THREE.BufferAttribute(streamLayout(count), 3));
     g.setAttribute("aLattice", new THREE.BufferAttribute(latticeLayout(count), 3));
     g.setAttribute("aPortrait", new THREE.BufferAttribute(portraitLayout(count), 3));
@@ -49,7 +47,6 @@ export function ParticleField({ count }: { count: number }) {
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uEmbed: { value: 0 },
       uStream: { value: 0 },
       uGallery: { value: 0 },
       uDenoise: { value: 0 },
@@ -90,7 +87,6 @@ export function ParticleField({ count }: { count: number }) {
     // Ease toward the scroll targets rather than tracking them exactly; this
     // is what stops the field feeling glued to the scrollbar.
     const k = 1 - Math.pow(0.001, delta);
-    u.uEmbed.value += (scrollState.embed - u.uEmbed.value) * k;
     u.uStream.value += (scrollState.stream - u.uStream.value) * k;
     u.uGallery.value += (scrollState.gallery - u.uGallery.value) * k;
     u.uDenoise.value += (scrollState.denoise - u.uDenoise.value) * k;

@@ -22,9 +22,8 @@
 export const ACTS = [
   "gallery", // wide lattice, behind the opening gallery
   "stream", // a flowing band behind the toolbox wall
-  "embed", // two dense clusters
   "denoise", // resolves toward the portrait
-  "constellation", // sparse and calm, behind the credentials
+  "constellation", // sparse and calm, behind the projects grid
   "disperse", // blows apart behind the contact block
 ] as const;
 

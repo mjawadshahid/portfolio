@@ -17,12 +17,16 @@ import { TiltCard } from "@/components/effects/TiltCard";
 /**
  * The home page.
  *
- * Dark WebGL bands are interleaved with paper document sections the whole way
- * down. `data-act` marks which state the canvas should be in, and the order
- * these appear in must match the ACTS order in src/webgl/scrollState.ts, since
- * the shader chains its blends in that sequence. `data-ground="paper"` marks
- * an opaque section, which freezes the field rather than letting it morph
- * where nobody can see it.
+ * Opaque paper sections alternate with transparent field sections the whole
+ * way down. Two attributes drive that:
+ *
+ *   data-act        which shape the canvas morphs to. These must appear in the
+ *                   same order as ACTS in src/webgl/scrollState.ts, because
+ *                   the shader chains its blends in that sequence; a later act
+ *                   on an earlier section silently overwrites the earlier one.
+ *   data-ground     marks a section as opaque. The field freezes underneath
+ *                   rather than morphing where nobody can see it, so an act
+ *                   on an opaque section would do nothing.
  *
  * Every act is real DOM. Delete src/webgl and this page is still complete,
  * readable and crawlable.
@@ -30,6 +34,15 @@ import { TiltCard } from "@/components/effects/TiltCard";
 export default function HomePage() {
   const posts = getPosts().slice(0, 3);
   const projects = getProjects();
+
+  /*
+    Section numbers count what actually renders. The writing and projects
+    sections are conditional, so hardcoding them left gaps (06 followed by 08)
+    the moment a collection was empty. JSX evaluates top to bottom and `&&`
+    short-circuits, so a skipped section never takes a number.
+  */
+  let n = 0;
+  const step = () => String(++n).padStart(2, "0");
 
   return (
     <>
@@ -52,12 +65,32 @@ export default function HomePage() {
       </section>
 
       {/* ═════════════ 01 — what i do, shown rather than listed in a grid */}
-      <ScatterGallery index="01" label="what i do" />
+      <ScatterGallery index={step()} label="what i do" />
 
-      {/* ══════════════════════════════════════ 02 — the toolbox, as a wall */}
+      {/* ══════════════════════════════════════════ 02 — where it's run */}
+      <section className="ground-paper" data-ground="paper">
+        <div className="shell py-24 sm:py-32">
+          <SectionLabel index={step()}>where it&apos;s run</SectionLabel>
+
+          <KineticHeading
+            as="h2"
+            className="t-h2 max-w-[26ch] text-[var(--color-ink)]"
+          >
+            shipped into places where being wrong has consequences.
+          </KineticHeading>
+
+          <p className="t-body mt-7 text-[var(--color-ink-body)]">
+            aviation ground operations and clinical healthcare. regulated,
+            operational, and unforgiving of a demo that only works on the happy
+            path.
+          </p>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════ 03 — the toolbox, as a wall */}
       <section className="ground-field relative" data-act="stream">
         <div className="shell py-24 sm:py-32">
-          <SectionLabel index="02" tone="terminal">
+          <SectionLabel index={step()} tone="terminal">
             toolbox
           </SectionLabel>
           <p className="t-h3 mb-12 max-w-[34ch] text-[var(--color-terminal-dim)]">
@@ -69,32 +102,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════ 03 — embed */}
-      <section className="ground-field relative" data-act="embed">
-        <div className="shell py-28 sm:py-36">
-          <SectionLabel index="03" tone="terminal">
-            where it&apos;s run
-          </SectionLabel>
-
-          <KineticHeading
-            as="h2"
-            className="t-h2 max-w-[26ch] text-[var(--color-terminal-bright)]"
-          >
-            shipped into places where being wrong has consequences.
-          </KineticHeading>
-
-          <p className="t-body mt-7 text-[var(--color-terminal-dim)]">
-            aviation ground operations and clinical healthcare. regulated,
-            operational, and unforgiving of a demo that only works on the happy
-            path.
-          </p>
-        </div>
-      </section>
-
       {/* ═══════════════════════ 04 — the join, work assembles from the sides */}
       <section className="ground-paper" data-ground="paper">
         <div className="shell overflow-hidden py-20 sm:py-24">
-          <SectionLabel index="04">selected work</SectionLabel>
+          <SectionLabel index={step()}>selected work</SectionLabel>
 
           <Converge>
             <ul className="space-y-10">
@@ -151,7 +162,7 @@ export default function HomePage() {
         data-act="denoise"
       >
         <div className="shell py-24">
-          <SectionLabel index="05" tone="terminal">
+          <SectionLabel index={step()} tone="terminal">
             denoise
           </SectionLabel>
           <KineticHeading
@@ -165,9 +176,9 @@ export default function HomePage() {
 
       {/* ═══════════════════════════════════════════════ 06 — the projects */}
       {projects.length > 0 && (
-        <section className="ground-field relative">
+        <section className="ground-field relative" data-act="constellation">
           <div className="shell py-24 sm:py-32">
-            <SectionLabel index="06" tone="terminal">
+            <SectionLabel index={step()} tone="terminal">
               projects
             </SectionLabel>
 
@@ -215,7 +226,7 @@ export default function HomePage() {
       {posts.length > 0 && (
         <section className="ground-paper" data-ground="paper">
           <div className="shell py-20 sm:py-24">
-            <SectionLabel index="07">writing</SectionLabel>
+            <SectionLabel index={step()}>writing</SectionLabel>
             <ul className="space-y-8">
               {posts.map((post) => (
                 <li key={post.slug}>
@@ -243,12 +254,10 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* ══════════════════════════════════════════════ 08 — constellation */}
-      <section className="ground-field relative" data-act="constellation">
+      {/* ═══════════════════════════════════════════════ 08 — credentials */}
+      <section className="ground-paper-raised" data-ground="paper">
         <div className="shell py-24 sm:py-32">
-          <SectionLabel index="08" tone="terminal">
-            credentials
-          </SectionLabel>
+          <SectionLabel index={step()}>credentials</SectionLabel>
 
           <dl className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
             {[
@@ -258,11 +267,11 @@ export default function HomePage() {
               { k: "cgpa", v: education.cgpa },
             ].map((item) => (
               <div key={item.k}>
-                <dt className="t-label mb-2 text-[var(--color-terminal-dim)]">
+                <dt className="t-label mb-2 text-[var(--color-muted)]">
                   {item.k}
                 </dt>
                 {/* Proper nouns: degrees, awards, issuers. */}
-                <dd className="keep-case font-[family-name:var(--font-mono)] text-[1.02rem] tracking-[-0.02em] text-[var(--color-terminal-bright)]">
+                <dd className="keep-case font-[family-name:var(--font-mono)] text-[1.02rem] tracking-[-0.02em] text-[var(--color-ink)]">
                   {item.v}
                 </dd>
               </div>

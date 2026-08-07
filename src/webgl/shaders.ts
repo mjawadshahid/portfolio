@@ -23,7 +23,6 @@
  */
 
 export const vertexShader = /* glsl */ `
-  attribute vec3 aCluster;
   attribute vec3 aStream;
   attribute vec3 aLattice;
   attribute vec3 aPortrait;
@@ -32,7 +31,6 @@ export const vertexShader = /* glsl */ `
   attribute float aRandom;
 
   uniform float uTime;
-  uniform float uEmbed;
   uniform float uStream;
   uniform float uGallery;
   uniform float uDenoise;
@@ -65,21 +63,19 @@ export const vertexShader = /* glsl */ `
 
     float t1 = ss((uGallery       - stagger) * k);
     float t2 = ss((uStream        - stagger) * k);
-    float t3 = ss((uEmbed         - stagger) * k);
-    float t4 = ss((uDenoise       - stagger) * k);
-    float t5 = ss((uConstellation - stagger) * k);
-    float t6 = ss((uDisperse      - stagger) * k);
+    float t3 = ss((uDenoise       - stagger) * k);
+    float t4 = ss((uConstellation - stagger) * k);
+    float t5 = ss((uDisperse      - stagger) * k);
 
     vec3 pos = aDisperse;
     pos = mix(pos, aLattice,       t1);
     pos = mix(pos, aStream,        t2);
-    pos = mix(pos, aCluster,       t3);
-    pos = mix(pos, aPortrait,      t4);
-    pos = mix(pos, aConstellation, t5);
-    pos = mix(pos, aDisperse,      t6);
+    pos = mix(pos, aPortrait,      t3);
+    pos = mix(pos, aConstellation, t4);
+    pos = mix(pos, aDisperse,      t5);
 
     // Ambient drift, calmest while the portrait is resolved.
-    float settled = t4 * (1.0 - t5);
+    float settled = t3 * (1.0 - t4);
     float drift = 1.0 - settled * 0.8;
 
     float n = hash(aDisperse * 1.7);
@@ -98,7 +94,7 @@ export const vertexShader = /* glsl */ `
     gl_PointSize = max(1.0, size * (12.0 / -mv.z));
 
     vRandom = aRandom;
-    vState = t4 * (1.0 - t6);
+    vState = t3 * (1.0 - t5);
     vDepth = clamp(-mv.z / 26.0, 0.0, 1.0);
   }
 `;

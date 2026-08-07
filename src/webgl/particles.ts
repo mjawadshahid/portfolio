@@ -30,25 +30,6 @@ function gaussian(rand: () => number) {
 /** Parked far behind the camera, effectively invisible for this state. */
 const PARKED = 60;
 
-export function clusterLayout(count: number, seed = 2): Float32Array {
-  const rand = mulberry32(seed);
-  const out = new Float32Array(count * 3);
-
-  const centres = [
-    [-2.8, 0.35, 0],
-    [2.8, -0.35, 0],
-  ];
-
-  for (let i = 0; i < count; i++) {
-    const c = centres[i % 2];
-    const spread = 1.2;
-    out[i * 3] = c[0] + gaussian(rand) * spread;
-    out[i * 3 + 1] = c[1] + gaussian(rand) * spread * 0.8;
-    out[i * 3 + 2] = c[2] + gaussian(rand) * spread * 0.7;
-  }
-  return out;
-}
-
 /**
  * A horizontal flowing band. Sits behind the marquee, so the field appears to
  * be moving with the text.
