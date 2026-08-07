@@ -125,6 +125,30 @@ export function latticeLayout(count: number, seed = 6): Float32Array {
   return out;
 }
 
+/**
+ * The opening state: particles everywhere.
+ *
+ * A wide, deep, evenly-filled volume that overfills the frame, so the page
+ * opens inside the field rather than looking at a shape sitting in the middle
+ * of it. The whole sequence is bookended — it starts scattered, condenses
+ * through the acts, and disperses again at the end.
+ *
+ * Depth is biased backwards so the densest part sits behind the headline
+ * instead of on top of it.
+ */
+export function ambientLayout(count: number, seed = 10): Float32Array {
+  const rand = mulberry32(seed);
+  const out = new Float32Array(count * 3);
+
+  for (let i = 0; i < count; i++) {
+    out[i * 3] = (rand() - 0.5) * 30;
+    out[i * 3 + 1] = (rand() - 0.5) * 18;
+    // cbrt biases toward the far end, so the near plane stays sparse.
+    out[i * 3 + 2] = -1 - Math.cbrt(rand()) * 15;
+  }
+  return out;
+}
+
 export function noiseLayout(count: number, seed = 3): Float32Array {
   const rand = mulberry32(seed);
   const out = new Float32Array(count * 3);

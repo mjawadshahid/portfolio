@@ -9,9 +9,8 @@ export function Footer() {
       <div className="shell py-14">
         <div className="grid gap-10 sm:grid-cols-[1fr_auto_auto]">
           <div>
-            <p className="t-h3 text-[var(--color-terminal-bright)]">
+            <p className="t-h3 lowercase text-[var(--color-terminal-bright)]">
               {site.name}
-              <span className="text-[var(--color-amber)]">_</span>
             </p>
             <p className="t-mono-sm mt-2 text-[var(--color-terminal-dim)]">
               {site.role} · {site.location.city}, {site.location.country}

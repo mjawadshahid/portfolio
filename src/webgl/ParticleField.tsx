@@ -6,11 +6,11 @@ import * as THREE from "three";
 
 import { scrollState } from "./scrollState";
 import {
+  ambientLayout,
   tokenLayout,
   clusterLayout,
   streamLayout,
   latticeLayout,
-  noiseLayout,
   portraitLayout,
   constellationLayout,
   disperseLayout,
@@ -24,16 +24,16 @@ export function ParticleField({ count }: { count: number }) {
 
   const geometry = useMemo(() => {
     const g = new THREE.BufferGeometry();
-    const token = tokenLayout(count);
+    const ambient = ambientLayout(count);
     const { random } = attributes(count);
 
     // `position` is required by three even though the shader ignores it.
-    g.setAttribute("position", new THREE.BufferAttribute(token, 3));
-    g.setAttribute("aToken", new THREE.BufferAttribute(token, 3));
+    g.setAttribute("position", new THREE.BufferAttribute(ambient, 3));
+    g.setAttribute("aAmbient", new THREE.BufferAttribute(ambient, 3));
+    g.setAttribute("aToken", new THREE.BufferAttribute(tokenLayout(count), 3));
     g.setAttribute("aCluster", new THREE.BufferAttribute(clusterLayout(count), 3));
     g.setAttribute("aStream", new THREE.BufferAttribute(streamLayout(count), 3));
     g.setAttribute("aLattice", new THREE.BufferAttribute(latticeLayout(count), 3));
-    g.setAttribute("aNoise", new THREE.BufferAttribute(noiseLayout(count), 3));
     g.setAttribute("aPortrait", new THREE.BufferAttribute(portraitLayout(count), 3));
     g.setAttribute(
       "aConstellation",
@@ -101,15 +101,18 @@ export function ParticleField({ count }: { count: number }) {
     p.y += (scrollState.pointerY - p.y) * k * 0.5;
 
     /**
-     * Held back at the very top of the page: at full strength behind the hero
-     * the field reads as television static and fights the headline, and it
-     * keeps the heaviest paint work out of LCP. It comes up as soon as you
-     * start scrolling and then stays up for the rest of the page.
+     * The opening state is a wide ambient field rather than the dense token
+     * block, so it can be properly visible from the first frame without
+     * reading as static behind the headline — that was only a problem when
+     * the particles were packed into a rectangle.
+     *
+     * It still lifts a little on scroll, mostly so entering the sequence has
+     * some lift to it.
      */
     const reveal = Math.min(1, scrollState.tokenize * 1.6);
     const eased = reveal * reveal * (3 - 2 * reveal);
-    u.uOpacity.value = 0.1 + eased * 0.82;
-    u.uSize.value = 2.6 + eased * 1.5;
+    u.uOpacity.value = 0.62 + eased * 0.3;
+    u.uSize.value = 2.9 + eased * 1.2;
 
     if (pointsRef.current) {
       pointsRef.current.rotation.y += delta * 0.014;

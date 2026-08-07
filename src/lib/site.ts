@@ -10,7 +10,9 @@ export const site = {
   name: "Jawad Shahid",
   shortName: "JS",
   role: "AI Engineer",
-  tagline: "AI engineer. I build machine learning systems that run in production.",
+  // Lowercase on purpose: the site sets display and body copy in lowercase.
+  // Metadata and structured data use `description` below, which is not.
+  tagline: "ai engineer. i build machine learning systems that run in production.",
   description:
     "AI engineer with 3+ years building production machine learning systems — optimisation, LLM tooling, and the software around them. AWS Certified Solutions Architect. Gold medallist, FAST NUCES.",
   locale: "en_US",
